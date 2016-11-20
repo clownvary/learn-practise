@@ -1,0 +1,268 @@
+@mainwidth: 550px;
+.basefont-style {
+  color: rgba(255, 255, 255, 0.3);
+  text-shadow: -1px -1px rgba(0, 0, 0, 0.2);
+}
+
+@basecolor: #eeeef1;
+@base-checked-color: #444644; //选择框选中颜色
+@base-border-color: #8d7d77;
+:global {
+  body {
+    width: @mainwidth;
+    margin: auto;
+    background-color: rgba(222, 224, 221, 0.43);
+    font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
+}
+
+.header {
+  text-align: center;
+  font-size: 70px;
+  font-weight: 100;
+  .basefont-style;
+  h1 {
+    margin-bottom: 15px;
+  }
+}
+
+.mainipt {
+  width: @mainwidth;
+  box-shadow: 1px 1px 10px #c4c0c0;
+  text-align: center;
+  background-color: @base-border-color;
+  margin: 0;
+  padding: 0;
+  height: 90px;
+  form {
+    display: block;
+    width: inherit;
+    height: 75px;
+    margin-top: 15px;
+    float: left;
+
+  }
+
+}
+
+.newtodo {
+  float: right;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  text-indent: 10px;
+  font-size: 24px;
+  width: 510px;
+  height: 40px;
+  z-index: 2;
+  padding: 17px 0 18px 0;
+  outline: none;
+  background-color: @basecolor;
+}
+
+//checkbox选择效果
+
+.checkTodo {
+  float: left;
+  display: inline-block;
+  width: 39px;
+  height: 75px;
+  border-right: dotted 1px red;
+  position: relative;
+  text-align: center;
+  background-color: @basecolor;
+}
+.checkTodo  input[type='checkbox'] {
+  display: none;
+}
+
+.checkTodo  input[type='checkbox']:checked + label {
+  color: @base-checked-color;
+  font-size: 10px;
+}
+
+.forAll {
+  position: absolute;
+  display: block;
+  width: 24px;
+  height: 24px;
+  top: 28px;
+  left: 8px;
+  .basefont-style;
+  &:after {
+    content: '︾';
+    font-size: 20px;
+  }
+}
+.forAllHide{
+  display: none;
+}
+
+//todoitem开始
+.items {
+  width: @mainwidth;
+
+}
+
+.ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: @mainwidth;
+  box-shadow: 1px 1px 10px #c4c0c0;
+}
+.li{
+
+}
+
+.forItem{
+  position: absolute;
+  display: block;
+  width: 24px;
+  height: 24px;
+  top: 28px;
+  left: 8px;
+  .basefont-style;
+  &:after {
+    content: '✔';
+    font-size: 20px;
+  }
+}
+
+.todoitem {
+  overflow: auto;
+  border-top: dotted 1px black;
+  position: relative;
+}
+
+.labelItem {
+  .newtodo;
+  line-height: 40px;
+
+}
+.labelItemCompleted
+{
+  .labelItem;
+  text-decoration: line-through;
+  cursor: pointer;
+}
+
+.todoCompleted {
+  text-decoration: line-through;
+}
+
+.editTodo {
+  .newtodo;
+  background-color: white;
+}
+.Hide
+{
+  display: none;
+}
+
+.destroy {
+  position: absolute;
+  display: block;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  outline: none;
+  border: 0;
+  top: 24px;
+  right: 10px;
+  background-color: transparent;
+  transition: all 0.5s;
+  &::after {
+    content: '✖';
+    color: @base-border-color;
+    font-size: 24px;
+  }
+  &:hover {
+    transform: scale(1.5, 1.5);
+    text-shadow: 0px 0px 10px @base-border-color;
+  }
+}
+
+//todoitem结束
+//foot开始
+.footer {
+  float: left;
+  left: 11px;
+  width: @mainwidth - 22;
+  margin: 0 auto;
+  background-color: #eeeef1;
+  position: relative;
+  height: 40px;
+  z-index: -2;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+  &:before {
+    content: '';
+    display: block;
+    width: @mainwidth - 18;
+    left: -2px;
+    height: 4px;
+    margin: auto;
+    position: absolute;
+    top: 0px;
+    background-color: rgba(202, 206, 206, 0.39);
+    box-shadow: 0 0 2px black;
+    z-index: -1;
+
+  }
+  .spCount {
+    font-size: 14px;
+    font-weight: 700;
+    color: #4d4d4d;
+    float: left;
+    margin-top: 13px;
+    margin-left: 10px;
+  }
+  .spLabel {
+    color: #4d4d4d;
+    font-weight: 200;
+  }
+
+  ul {
+    padding: 0;
+    list-style: none;
+    float: left;
+    margin-left: 100px;
+    margin-top: 15px;
+    olor: #4d4d4d;
+    font-weight: 300;
+    li {
+      display: inline;
+      margin-left: 10px;
+      a {
+        text-decoration: none;
+        color: #8d7d77;
+      }
+    }
+  }
+  .clearCompleted {
+    float: right;
+    margin-right: 10px;
+    margin-top: 10px;
+    line-height: 20px;
+    text-decoration: none;
+    background: rgba(180, 165, 165, 0.1);
+    font-size: 11px;
+    outline: none;
+    padding: 0 10px;
+    right: 10px;
+    border-radius: 3px;
+    box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.2);
+    &:hover {
+      background: rgba(0, 0, 0, 0.15);
+      box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.3);
+    }
+
+  }
+}
+
+.uiActive {
+  font-weight: 700;
+  color: #8d7d77;
+}
+
+//foot结束
