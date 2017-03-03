@@ -1,0 +1,22 @@
+<form [formGroup]="userForm">
+    <label>姓名:</label>
+    <input type="text" formControlName="name">
+    <span *ngIf="userForm.controls.name.pristine">未修改</span>
+    <span *ngIf="userForm.controls.name.dirty">已修改</span>
+    <span *ngIf="userForm.controls.name.valid">有效</span>
+    <div [hidden]="userForm.controls.name.valid||userForm.controls.name.pristine">
+        <p *ngIf="userForm.controls.name.errors?.minlength">姓名最小长度为3</p>
+        <p *ngIf="userForm.controls.name.errors?.required">必须输入姓名</p>
+    </div>
+    <label>电话:</label>
+    <input type="text" formControlName="mobile">
+    <p *ngIf="userForm.controls.mobile.errors?.validateMobile">电话号码格式不正确</p>
+
+    <fieldset formGroupName="address">
+        <label>城市:</label>
+        <input type="text" formControlName="city">
+        <label>街道:</label>
+        <input type="text" formControlName="street">
+    </fieldset>
+    <button type="submit">保存</button>
+</form>
