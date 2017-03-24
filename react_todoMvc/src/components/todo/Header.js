@@ -9,7 +9,7 @@ export default class Header extends  React.Component
     {
         return(
             <div className={style.header}>
-                <h1>todo</h1>
+                <h1>todos</h1>
             </div>
         );
     }
