@@ -4,16 +4,17 @@
 'use strict';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {
-    addTodo,
-    completeTodo,
-    toggleAll,
-    clearAll,
-    updateTodo,
-    setVisibilityFilter,
-    removeTodo,
-    VisibilityFilters
-} from '../actions';
+// import {
+//     addTodo,
+//     completeTodo,
+//     toggleAll,
+//     clearAll,
+//     updateTodo,
+//     setVisibilityFilter,
+//     removeTodo,
+//     VisibilityFilters
+// } from '../actions';
+import * as actionCreator from '../actions';
 import Header from '../Header';
 import AddTodo from '../AddTodo';
 import TodoList from '../TodoList';
@@ -63,6 +64,7 @@ class App extends React.Component {
     }
 }
 function selectTodos(todos, filter) {
+    var VisibilityFilters=actionCreator.VisibilityFilters;
     switch (filter) {
         case VisibilityFilters.SHOW_ALL:
             return todos;
@@ -89,17 +91,20 @@ function select(state) {
 }
 function mapDispatchToProps(dispatch) {
     //导出为一个对象,然后在对象里引用
+    // return {
+    //     actions: bindActionCreators({
+    //         addTodo,
+    //         completeTodo,
+    //         toggleAll,
+    //         clearAll,
+    //         updateTodo,
+    //         removeTodo,
+    //         setVisibilityFilter
+    //     }, dispatch)
+    // };
     return {
-        actions: bindActionCreators({
-            addTodo,
-            completeTodo,
-            toggleAll,
-            clearAll,
-            updateTodo,
-            removeTodo,
-            setVisibilityFilter
-        }, dispatch)
-    };
+        actions:bindActionCreators(actionCreator,dispatch)
+    }
 }
 //connect 只传了第一个参数,第二个dispatch配置没有,默认是加载dispatch
 export default connect(select, mapDispatchToProps)(App);
