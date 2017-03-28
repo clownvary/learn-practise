@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
 class RoutesStyle extends Component {
     componentDidMount() {
-     
-         const { history } = this.props;
-         browserHistory.push({ pathname: '/home', state: { score: 70 } });
-        console.log(this.props.location.state.score);
+     //todo if u wangt test push method,cancel annotations
+        //  const { history } = this.props;
+        //  browserHistory.push({ pathname: '/home', state: { score: 70 } });
+        //  console.log(this.props.location.state.score);
     }
     render() {
         return (

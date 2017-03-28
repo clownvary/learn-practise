@@ -23,10 +23,15 @@
  * todoDemo
  */
 import todoApp from './components/todo/reducers';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
+ import promiseMiddleware  from 'redux-promise';//两个导出名称一样，所以要注释一个
+// import promiseMiddleware from 'redux-promise-middleware';
 import App from './components/todo/container/app';
-let  store=createStore(todoApp, window.devToolsExtension && window.devToolsExtension());
+
+//let  store=createStore(todoApp, window.devToolsExtension && window.devToolsExtension());
+let store=createStore(todoApp,applyMiddleware(thunk, promiseMiddleware));
 ReactDOM.render(
     <Provider store={store}>
         <App />
