@@ -14,7 +14,7 @@ import {bindActionCreators} from 'redux';
 //     removeTodo,
 //     VisibilityFilters
 // } from '../actions';
-import * as actionCreator from '../actions';
+import * as actionCreator from '../actions';//一次全部倒入
 import Header from '../Header';
 import AddTodo from '../AddTodo';
 import TodoList from '../TodoList';
@@ -31,10 +31,9 @@ class App extends React.Component {
             'SHOW_ACTIVE'
         ]).isRequired
     };
-
     render() {
-        //直接用actions就不用dispatch了
-        const {visibleTodos, leftCount, todosCount, completedCount, visibilityFilter, actions} = this.props;//是合并到组件的props
+        //直接用actions就不用dispatch了}
+        const {visibleTodos, leftCount, todosCount, completedCount, visibilityFilter, actions} = this.props; //是合并到组件的props
         return (
             <div>
                 <Header/>
@@ -108,3 +107,4 @@ function mapDispatchToProps(dispatch) {
 }
 //connect 只传了第一个参数,第二个dispatch配置没有,默认是加载dispatch
 export default connect(select, mapDispatchToProps)(App);
+

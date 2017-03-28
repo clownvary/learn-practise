@@ -6221,6 +6221,7 @@
 	//     removeTodo,
 	//     VisibilityFilters
 	// } from '../actions';
+	//一次全部倒入
 	
 	
 	var _reactRedux = __webpack_require__(26);
@@ -6269,7 +6270,7 @@
 	    _createClass(App, [{
 	        key: 'render',
 	        value: function render() {
-	            //直接用actions就不用dispatch了
+	            //直接用actions就不用dispatch了}
 	            var _props = this.props,
 	                visibleTodos = _props.visibleTodos,
 	                leftCount = _props.leftCount,
@@ -6421,13 +6422,16 @@
 	    _createClass(Header, [{
 	        key: 'render',
 	        value: function render() {
+	            // can get gloabal constant in webpack.config
+	            var env = ("5fa3b9");
+	            var env1 = ("rrrr");
 	            return React.createElement(
 	                'div',
 	                { className: _style2.default.header },
 	                React.createElement(
 	                    'h1',
 	                    null,
-	                    'todos'
+	                    'todo'
 	                )
 	            );
 	        }

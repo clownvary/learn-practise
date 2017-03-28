@@ -17,6 +17,14 @@ module.exports = {
         new webpack.BannerPlugin('This file is created by wangyan'),
         //new CommonsChunkPlugin('vendor',"common.js"),
         new ExtractTextPlugin("main.css"),
+        new webpack.DefinePlugin({
+            __DEV__: false,
+            __STATIC__: JSON.stringify("5fa3b9"),
+            ___TESTING___: false,
+            __PRODUCTION__: false,
+            ___SERVERRENDER___: false,
+            TF: JSON.stringify('rrrr')
+        })
         // new HtmlWebpackPlugin({
         //     title:'webpack-demo',
         //     hash:true,
@@ -36,18 +44,18 @@ module.exports = {
 
             {
                 test: /\.less$/,
-               // include: path.resolve(__dirname, "src/assets"),
+                // include: path.resolve(__dirname, "src/assets"),
                 loader: ExtractTextPlugin.extract('style', 'css?modules&localIdentName=[name]__[local]-[hash:base64:5]!postcss!less')
             },//
             // {test: /\.less$/, include:path.resolve(__dirname, "assets"),loader: 'style!css!postcss!less},
             {
 
                 test: /\.js$/,
-               // include: './src/js/',react这里加这个会出错
+                // include: './src/js/',react这里加这个会出错
                 exclude: './node_modules/',
                 query: {
                     plugins: ['transform-decorators-legacy'],
-                    presets: ['es2015', 'stage-0','react']
+                    presets: ['es2015', 'stage-0', 'react']
                 },
                 loader: 'babel',
             },
@@ -60,7 +68,7 @@ module.exports = {
         return [autoprefixer()];
         //return [px2rem({remUnit: 75}),autoprefixer()];
     },
-    devtool:'source-map',
+    devtool: 'source-map',
     resolve: {
         // you can now require('file') instead of require('file.coffee')
         extensions: ['', '.js', '.json', '.coffee']
