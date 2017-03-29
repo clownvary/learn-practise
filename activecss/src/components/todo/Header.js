@@ -3,6 +3,8 @@
  */
 'use strict';
 import style from './container/style.less';
+import React, { Component } from 'react';
+
 export default class Header extends React.Component {
     static contextTypes={
         color:React.PropTypes.string

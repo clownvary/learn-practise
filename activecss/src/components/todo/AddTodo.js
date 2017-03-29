@@ -4,6 +4,8 @@
 'use strict';
 import style from './container/style.less';
 import  className from 'classnames/bind';
+import React, { Component } from 'react';
+
 export  default class AddTodo extends React.Component {
     handleClick(e) {
         e.preventDefault();

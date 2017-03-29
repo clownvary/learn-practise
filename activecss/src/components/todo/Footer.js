@@ -3,6 +3,8 @@
  */
 'use strict';
 import style from './container/style.less';
+import React, { Component } from 'react';
+
 export default class Footer extends React.Component {
     static propTypes = {
         onClearAll:React.PropTypes.func.isRequired,

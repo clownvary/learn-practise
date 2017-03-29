@@ -19,6 +19,8 @@ import Header from '../Header';
 import AddTodo from '../AddTodo';
 import TodoList from '../TodoList';
 import Footer from '../Footer';
+import React, { Component } from 'react';
+
 class App extends React.Component {
     static propTypes = {
         visibleTodos: React.PropTypes.arrayOf(React.PropTypes.shape({

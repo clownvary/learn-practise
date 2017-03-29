@@ -4,6 +4,8 @@
 'use strict';
 import style from './container/style.less';
 import  className from 'classnames/bind';
+import React, { Component } from 'react';
+
 export default class Todo extends React.Component {
     constructor(props)
     {

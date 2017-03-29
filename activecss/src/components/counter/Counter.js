@@ -2,6 +2,7 @@
  * Created by wangyan on 16/9/12.
  */
 'use strict';
+import React, { Component } from 'react';
 
 export default class Counter extends React.Component {
     static propTypes={

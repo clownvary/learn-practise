@@ -2,6 +2,7 @@
  * Created by wangyan on 16/9/6.
  */
 'use strict';
+import React, { Component } from 'react';
 import style from '../../assets/style.less';
 // var converter = new Showdown.converter();
 class CommentBox extends React.Component {

@@ -6,6 +6,8 @@ import Counter from './Counter';
 import {ActionCreator} from './actions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import React, { Component } from 'react';
+
 class Index extends React.Component {
     static propTypes = {
         count: React.PropTypes.number.isRequired,

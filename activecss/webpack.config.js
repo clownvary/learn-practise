@@ -15,13 +15,13 @@ var px2rem = require('postcss-px2rem'); //px转rem,移动端自适应
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
     entry: {
-        bundle: './src/app.js'//入口的键名 可以有多个
+        vendor: './src/app.js'//入口的键名 可以有多个
     },
     output: {
         path: path.resolve(__dirname, 'dev'),
         //publicPath:'/assets/',//是用来给引用的静态资源添加前缀的,不会生成这个目录,生成目录在loader里配置file?name=./images/[hash:8].[ext]
-        filename: 'bundle.js',
-        chunkFilename: 'js/chunk.[name].[hash].js'
+        filename: 'bundle.js'
+        // chunkFilename: 'js/chunk.[name].[hash].js'
     },
     module: {
         loaders: [{
@@ -34,7 +34,7 @@ module.exports = {
 
             test: /\.js$/,
             // include: './src/js/',react这里加这个会出错
-            exclude: ['/node_modules/','webpack.config.js'],
+            exclude: ['/node_modules/'],
             query: {
                 plugins: ['transform-decorators-legacy'],
                 presets: ['es2015', 'stage-0', 'react']
@@ -62,7 +62,7 @@ module.exports = {
     plugins: [
         new webpack.BannerPlugin('This file is created by wangyan'),
         //new CommonsChunkPlugin('vendor',"common.js"),
-        new ExtractTextPlugin("main.css"),
+        new ExtractTextPlugin("main[hash:8].css"),
         new webpack.DefinePlugin({
             __DEV__: false,
             __STATIC__: JSON.stringify("5fa3b9"),
@@ -74,12 +74,13 @@ module.exports = {
         new HtmlWebpackPlugin({
             title: 'active-css-demo',
             hash: true,
-            inject: true
+            inject: true,
+            template:'./src/index.html'
         })
     ],
     devServer: {
         contentBase: path.join(__dirname, "dev"),
-        compress: true,
+        // compress: true,
         port: 9000
     }
 }

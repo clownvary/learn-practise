@@ -4,6 +4,8 @@
 'use strict';
 import style from './container/style.less';
 import Todo from './Todo';
+import React, { Component } from 'react';
+
 export default class TodoList extends React.Component {
     static propTypes =
     {
