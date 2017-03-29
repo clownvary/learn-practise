@@ -42,10 +42,15 @@ class App extends React.Component {
     }
     render() {
         //直接用actions就不用dispatch了}
-        const {visibleTodos, leftCount, todosCount, completedCount, visibilityFilter, actions} = this.props; //是合并到组件的props
+        const {visibleTodos, leftCount, todosCount, completedCount, visibilityFilter, title,actions} = this.props; //是合并到组件的props
         return (
             <div>
-                <Header/>
+                {/*//thunk 实现*/}
+                {/*<Header title={title} onChangeTitle={(text)=>actions.changTitleAction(text)}/>*/}
+                {/*// redux-promise实现*/}
+                <Header title={title} onChangeTitle={(text)=>actions.changeTitlePromise(text)}/>
+                {/*//redux-promise-middleware 实现*/}
+                {/*<Header title={title} onChangeTitle={(text)=>actions.changeTitlePromiseMiddle(text)}/>*/}
                 <AddTodo
                     onAddClick={text =>actions.addTodo(text)}
                     onToggleAll={(isCompleted)=>actions.toggleAll(isCompleted)}
@@ -94,7 +99,8 @@ function select(state) {
         leftCount: state.todos.filter((todo)=>todo.completed === false).length,
         completedCount: state.todos.filter((todo)=>todo.completed === true).length,
         todosCount: state.todos.length,
-        visibilityFilter: state.visibilityFilter
+        visibilityFilter: state.visibilityFilter,
+        title:state.title
     };
 }
 function mapDispatchToProps(dispatch) {
