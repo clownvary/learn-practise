@@ -5,6 +5,9 @@
 import style from './container/style.less';
 export default class Header extends  React.Component
 {
+    static contextTypes={
+        color:React.PropTypes.string
+    }
     render()
     {
         // can get gloabal constant in webpack.config
@@ -12,8 +15,7 @@ export default class Header extends  React.Component
          let env1=TF;
         return(
             <div className={style.header}>
-                <h1>todo</h1>
-                
+                <h1>todo{this.context.color}</h1>
             </div>
         );
     }

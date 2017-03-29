@@ -31,6 +31,15 @@ class App extends React.Component {
             'SHOW_ACTIVE'
         ]).isRequired
     };
+    static childContextTypes={
+        color: React.PropTypes.string
+    }
+    getChildContext()
+    {
+        return {
+            color:'green'
+        }
+    }
     render() {
         //直接用actions就不用dispatch了}
         const {visibleTodos, leftCount, todosCount, completedCount, visibilityFilter, actions} = this.props; //是合并到组件的props
