@@ -1,0 +1,37 @@
+@import "./responsive.less";
+
+/**
+ * Header, Navigation and footer parts need to follow old system style.
+ */
+.netCUI-font-family {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.responsive-cui-wrap() {
+  width: 100%;
+  .flex("flexbox");
+  .flex-layout("center");
+}
+
+.create-cui-wrap(@name) {
+  .cui-app {
+    .cui-@{name}-wrap {
+      width: 100%;
+      .flex("flexbox");
+      .flex-layout("center");//control align of whole page.
+      .cui-@{name} {
+        .flex-layout("top");
+        .flex-layout("left");
+        @media @media-breakpoint-xs {
+          width: @page-xs-width;
+        }
+        @media @media-breakpoint-sm {
+          width: @page-sm-width;
+        }
+        @media @media-breakpoint-md {
+          width: @page-md-width;
+        }
+      }
+    }
+  }
+}

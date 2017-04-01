@@ -1,0 +1,42 @@
+@bubble-landing-gutter: 5px;
+@bubble-border-width: 6px;
+@bubble-background: #dcf4fd;
+
+
+.bubble-arrow(@prop) when (@prop = "left") {
+  &::after {
+    left: -@bubble-landing-gutter;
+    top: ~"calc(50% - @{bubble-border-width})";
+    border-width: @bubble-border-width @bubble-border-width @bubble-border-width 0;
+    border-color: transparent @bubble-background transparent transparent;
+  }
+}
+
+.bubble-arrow(@prop) when (@prop = "top") {
+  &::after {
+    top: -@bubble-landing-gutter;
+    left: ~"calc(50% - @{bubble-border-width})";
+    border-width: 0 @bubble-border-width @bubble-border-width;
+    border-color: transparent transparent @bubble-background transparent;
+  }
+}
+
+.bubble-arrow(@prop) when (@prop = "right") {
+  &::after {
+    left: auto;
+    right: -@bubble-landing-gutter;
+    top: ~"calc(50% - @{bubble-border-width})";
+    border-width: @bubble-border-width 0 @bubble-border-width @bubble-border-width;
+    border-color: transparent transparent transparent @bubble-background;
+  }
+}
+
+.bubble-arrow(@prop) when (@prop = "bottom") {
+  &::after {
+    top: auto;
+    bottom: -@bubble-landing-gutter;
+    left: ~"calc(50% - @{bubble-border-width})";
+    border-width: @bubble-border-width @bubble-border-width 0 @bubble-border-width;
+    border-color: @bubble-background transparent transparent transparent;
+  }
+}

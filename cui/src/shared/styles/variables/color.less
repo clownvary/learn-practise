@@ -1,0 +1,8 @@
+@import "../core/for.less";
+@color-set: #b3c042, #05bc96, #c250d9, #4254c0, #ffb500, #50e3c2, #ff46a2, #4a90e2;
+
+.each(@color-set, {.callback(@color, @index) {
+  .bg-set-@{index} {
+    background-color: @color;
+  }
+}});

@@ -1,0 +1,40 @@
+@import "~shared/styles/variables.less";
+
+.transactions-layouts {
+  .participant {
+    &-header {
+      margin: 2px 0 8px 0;
+      @media @media-breakpoint-xs {
+        margin: 2px 0 10px 0;
+        flex-direction: column;
+        .afx-bubble {
+          .bubble-arrow("top");
+        }
+        > * {
+          margin-bottom: 8px;
+        }
+      }
+    }
+    &-avator {
+      width: 70px;
+      div {
+        margin: auto;
+        width: 48px;
+        height: 48px;
+        line-height: 48px;
+        text-align: center;
+        font-size: 21px;
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+        box-shadow: inset -1px 2px 0 0 rgba(0, 0, 0, 0.1);
+        color: #fff;
+        border-radius: 50%;
+      }
+    }
+    &-transactions {
+      padding: 0 10px;
+      > div:not(:last-child) {
+        border-bottom: 1px dotted #d6d7da;
+      }
+    }
+  }
+}

@@ -1,0 +1,96 @@
+@import "~shared/styles/variables.less";
+
+.create-cui-wrap(footer);
+
+.cui-footer-wrap{
+  //For follow .NET CUI theme at footer part.
+  background-color: #666;
+  .netCUI-font-family;
+}
+
+.cui-footer {
+  color: #fff;
+  font-size: 14px;//for matching old style.
+  padding: 10px 0 15px 0;
+  line-height: 1.67;
+  .footer-siteNotice {
+    .flex-layout("top");
+    .ft-siteNotice-block{
+      margin: 10px 0 0;
+      padding-right: 20px;
+      ul {
+        padding-left: 40px;
+        list-style-type: initial;
+        li {
+          list-style: initial;
+          display: list-item;
+        }
+      }
+      dt {
+        font-weight: normal;
+        font-size: 14px;
+        margin-bottom: 5px;
+        color: #ccc;
+      }
+      dd {
+        margin: 0px;
+        font-size: 11px;
+      }
+    }
+    > .afx-col {
+      > dl:nth-child(2) {
+        margin-top: 20px;
+      }
+    }
+  }
+  a {
+    &:link, &:active, &:visited {
+      color: #fff;
+      text-decoration: none;
+    }
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  .footer-links {
+    position: relative;
+    .flex("flexbox");
+    .flex-layout("top");
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-content: left;
+    justify-content: space-between;
+    font-size: 10px;
+    .footer-logo {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+  }
+  .footer-siteLinks {
+    font-weight: bold;
+    .flex("flexbox");
+    .ft-siteLinks-links {
+      > span {
+        &::after {
+          content: "|";
+          margin: 0 12px;
+        }
+        &:last-child::after {
+          content: "";
+        }
+      }
+    }
+    .ft-siteLinks-logo {
+      width: 160px;
+      flex: 0 0 120px;
+      text-align: center;
+    }
+  }
+  .ft-copyRight{
+    margin: 0px;
+    text-align: left;
+    font-weight: @font-weight-Bold;
+
+  }
+}

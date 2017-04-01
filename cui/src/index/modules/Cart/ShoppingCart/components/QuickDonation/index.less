@@ -1,0 +1,60 @@
+@import "~shared/styles/variables.less";
+
+.quickdonation-panel {
+  .flex("flexbox");
+  align-items: stretch;
+  flex-direction: column;
+  > * {
+    margin: 5px 0;
+  }
+  h3 {
+    margin: 0 0 10px 0;
+  }
+  &-form {
+    .flex("flexbox");
+    .flex-layout("between");
+    flex-direction: row;
+    flex-wrap: nowrap;
+    .inputSelect {
+      width: 80px;
+      top: 0;
+      margin-top: 0px;
+    }
+  }
+  .currency-flag {
+    padding: 0 10px 0 20px;
+  }
+  .dropdown {
+    width: 170px;
+  }
+  @media @media-breakpoint-md {
+    &.afx-panel {
+      border: 0px;
+      padding: 0;
+    }
+  }
+  @media @media-breakpoint-sm {
+    .flex-layout("between");
+    flex-direction: row;
+    h3 {
+      flex: 1 0;
+    }
+    &-form {
+      margin-right: 20px;
+    }
+    .dropdown {
+      width: 160px;
+    }
+  }
+  @media @media-breakpoint-xs {
+    .dropdown {
+      flex: 1 0;
+    }
+    .afx-xl-right {
+      button {
+        width: 100%;
+        .button-size-default();
+      }
+    }
+  }
+}

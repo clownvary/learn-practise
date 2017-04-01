@@ -1,0 +1,13 @@
+{
+  "extends": "an",
+  "rules": {
+    "no-param-reassign": 0
+  },
+  "globals": {
+    "window": true,
+    "___TESTING___": true,
+    "___SERVERRENDER___": true,
+    "__STATIC__": true,
+    "__DEV__": true
+  }
+}

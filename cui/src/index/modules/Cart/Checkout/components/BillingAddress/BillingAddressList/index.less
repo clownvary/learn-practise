@@ -1,0 +1,31 @@
+@import "~shared/styles/variables.less";
+.billingaddress-list {
+  h4 {
+    margin-bottom: 10px;
+  }
+  &-tip {
+    color: @rolling-stone;
+    font-size: @font-size-less-base;
+    margin-bottom: 10px;
+  }
+  &-label {
+    .flex("flexbox");
+    .flex-layout("between");
+    .flex-layout("top");
+    flex-wrap: nowrap;
+    width: 100%;
+    margin-top: 15px;
+    &-detail {
+      li {
+        list-style: none;
+        font-size: 14px;
+        padding-bottom: 5px;
+      }
+    }
+    &-edit {
+      color: @cerulean;
+      cursor: pointer;
+      font-size: 14px;
+    }
+  }
+}

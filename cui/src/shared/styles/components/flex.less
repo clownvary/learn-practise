@@ -1,0 +1,85 @@
+@import "../variables.less";
+
+.aaui-flex {
+  .flex;
+}
+
+.aaui-flexbox {
+  .flex("flexbox");
+  align-items: flex-start;
+}
+
+/**
+ * afx - aaui flex.
+ */
+.afx-col {
+  .flex-col;
+}
+
+/**
+ * Normal scale as default.
+ * 		xl.
+ * Not affected for media breakpoint.
+ */
+ .create-flex-all-layout(xl);
+ .create-flex-order(xl, 12);
+ .afx-xl-order-first {order: -1};
+ .create-flex-grow(xl, 12);
+ .afx-xl-basis-0{
+   flex-basis: 0;
+ };
+
+
+ /**
+  * Responsive scale:
+  * 		xs: < 768px,  //Mobile
+  * 		sm: >= 768px, //Tablet
+  * 		md: >= 960px, //PC middle - As design, the scale of page content is limited to 960px; (not 992px)
+  * 		lg: >= 1200px //PC big- As design, dont needs this breakpoint at present stage.
+  */
+//xs
+@media @media-breakpoint-xs {
+  .create-flex-all-layout(xs);
+  .create-flex-order(xs, 12);
+  .afx-xs-order-first {order: -1};
+  .create-flex-grow(xs, 12);
+  .afx-xs-basis-0{
+    flex-basis: 0;
+  };
+}
+//sm
+@media @media-breakpoint-sm {
+  .create-flex-all-layout(sm);
+  .create-flex-order(sm, 12);
+  .afx-sm-order-first {order: -1};
+  .create-flex-grow(sm, 12);
+  .afx-sm-basis-0{
+    flex-basis: 0;
+  };
+}
+//md
+@media @media-breakpoint-md {
+  .create-flex-all-layout(md);
+  .create-flex-order(md, 12);
+  .afx-md-order-first {order: -1};
+  .create-flex-grow(md, 12);
+  .afx-xl-basis-0{
+    flex-basis: 0;
+  };
+}
+
+
+/**
+ * asce - ascending
+ * desc - descending
+ */
+.afx-order {
+  &-asce {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  &-desc {
+    flex-direction: row-reverse;
+    flex-wrap: wrap-reverse;
+  }
+}

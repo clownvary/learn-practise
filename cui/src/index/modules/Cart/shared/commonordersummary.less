@@ -1,0 +1,44 @@
+@import "~shared/styles/variables.less";
+
+.common-ordersummary {
+  .flex("flexbox");
+  flex-direction: column;
+  > * {
+    width: 100%;
+  }
+  &-list {
+    margin-top: 10px;
+    li {
+      .flex("flexbox");
+      .flex-layout("top");
+      .flex-layout("between");
+      flex-wrap: nowrap;
+      list-style: none;
+      margin: 10px 0;
+      > span.field-label {
+        flex: 1 0 70%;
+        font-weight: @font-weight-semiBold;
+      }
+      > span.field-value {
+        flex: 0 0 30%;
+        text-align: right;
+        word-break: break-all;
+      }
+    }
+  }
+  &-duenow {
+    .flex("flexbox");
+    .flex-layout("between");
+    margin-top: 4px;
+    font-size: 21px;
+    font-weight: @font-weight-semiBold;
+    > b {
+      color: #f06e17;
+    }
+  }
+  @media @media-breakpoint-md {
+    > h3 {
+      margin-top: -8px;
+    }
+  }
+}

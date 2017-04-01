@@ -1,0 +1,38 @@
+@icon-font-size:  16px;
+@icon-base-name: icon;
+@icon-spin-name: icon-spin;
+
+.@{icon-base-name} {
+	font-size: @icon-font-size;
+	cursor: pointer;
+}
+
+._icon(@name, @content) {
+	.@{icon-base-name}-@{name} {
+		&:before {
+	        content: @content;
+	    }
+	}
+}
+
+.icon(@name, @rules, @base-rules) {
+	.@{icon-base-name}-@{name} {
+		@base-rules();
+		&:before {
+			@rules();
+		}
+	}
+}
+
+.icon() {
+	font-family: aui_icons;
+	font-weight: 400;
+	font-style: normal;
+	font-variant: normal;
+	line-height: 1;
+	display: inline-block;
+	text-transform: none;
+	speak: none;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}

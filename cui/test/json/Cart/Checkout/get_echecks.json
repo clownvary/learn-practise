@@ -1,0 +1,51 @@
+{
+  "headers": {
+    "response_code": "0000",
+    "response_message": "Succeesul",
+    "page_info": {
+      "order_by": "",
+      "total_records": 0,
+      "order_option": "ASC",
+      "page_number": 1,
+      "total_records_per_page": 30,
+      "total_page": 1
+    }
+  },
+  "body": {
+    "saved_cards": [{
+        "customer_id": 13301,
+        "company_id": 0,
+        "ams_account_id": "Demo AccountID",
+        "save_name": "aaa",
+        "card_number": "0107",
+        "card_expiration": "11/2019",
+        "card_type_id": 2,
+        "card_type": "MasterCard",
+        "bank_routing_number": "",
+        "bank_account_number": "",
+        "bank_account_type": "",
+        "exclude": false,
+        "retired": false,
+        "ams_retention_date": 1575187200000,
+        "is_secondary_payment": false
+      },
+      {
+        "customer_id": 13301,
+        "company_id": 0,
+        "ams_account_id": "Demo AccountID",
+        "save_name": "bb",
+        "card_number": "4299",
+        "card_expiration": "11/2020",
+        "card_type_id": 1,
+        "card_type": "Visa",
+        "bank_routing_number": "",
+        "bank_account_number": "",
+        "bank_account_type": "",
+        "exclude": false,
+        "retired": false,
+        "ams_retention_date": 1606809600000,
+        "is_secondary_payment": false
+      }
+    ]
+  }
+}

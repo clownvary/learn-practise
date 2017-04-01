@@ -1,0 +1,32 @@
+@import "~shared/styles/variables.less";
+
+.waiver-panel {
+  > h2 {
+    margin-bottom: 20px;
+  }
+  .waiver-body {
+    margin: 20px 0;
+  }
+  .alert-warning {
+    margin: 10px 0 20px 0;
+    padding: 5px 10px;
+  }
+  .checkScrollModal-container {
+    position: relative;
+    max-height: 300px;
+    padding: 15px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    margin-bottom: 1px;
+    overflow: auto;
+  }
+  .modal-box {
+    width: 650px;
+  }
+  @media @media-breakpoint-md {
+    &.afx-panel {
+      border: 0px;
+      padding: 0;
+    }
+  }
+}

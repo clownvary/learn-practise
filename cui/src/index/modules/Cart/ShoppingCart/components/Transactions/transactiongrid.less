@@ -1,0 +1,70 @@
+@import "~shared/styles/variables.less";
+
+@transactions-grid-last-td-width: 120px;
+
+.transactions-layouts {
+  .transaction {
+    &-grid {
+      margin: 16px 0;
+    }
+    &-gather {
+      .flex("flexbox");
+      .flex-layout("top");
+      padding: 8px 10px;
+      font-weight: @font-weight-semiBold;
+      background: @normal-table-background-color;
+      > b {
+        flex-grow: 1;
+        text-align: right;
+      }
+      > span {
+        flex: 0 0 @transactions-grid-last-td-width;
+        text-align: right;
+      }
+      > * {
+        padding: 2px 6px;
+      }
+    }
+    &-gather-others {
+      font-weight: @font-weight-Reg;
+      background: #eff5f8;
+    }
+
+    .normal-responsive-table {
+      tr {
+        > td:last-child {
+          width: @transactions-grid-last-td-width;
+        }
+      }
+      tbody {
+        border-bottom: 1px solid @normal-table-border-color;
+      }
+    }
+    @media @media-breakpoint-xs {
+      .normal-responsive-table {
+        tr {
+          > td:last-child {
+            width: auto;
+          }
+          td {
+            > span {
+              padding: 0 10px;
+            }
+            &::before {
+              flex: 0 1 40%;
+            }
+          }
+        }
+      }
+      &-gather {
+        > label {
+          flex: 0 1 40%;
+          text-align: right;
+        }
+        > span {
+          text-align: left;
+        }
+      }
+    }
+  }
+}

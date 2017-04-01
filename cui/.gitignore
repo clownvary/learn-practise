@@ -1,0 +1,16 @@
+
+.idea/
+
+!/node_modules/eslint-config-an/*
+!/node_modules/active.css/
+!/node_modules/react-aaui/*
+!/node_modules/react-base-ui/*
+/bower_components/
+/dist/
+/build/
+/node/
+/test/coverage
+/.vscode/
+npm-debug.log
+.jsbeautifyrc
+eslint-checkstyle.xml

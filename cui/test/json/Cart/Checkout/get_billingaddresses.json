@@ -1,0 +1,60 @@
+{
+  "headers": {
+    "response_code": "0000",
+    "response_message": "Succeesul",
+    "page_info": {
+      "order_by": "",
+      "total_records": 0,
+      "page_number": 1,
+      "total_records_per_page": 30,
+      "total_page": 1,
+      "order_option": "ASC"
+    }
+  },
+  "body": {
+    "billing_infos": {
+      "payers": [{
+        "customer_id": 166,
+        "name": "Evan Zhou",
+        "first_name": "Evan",
+        "last_name": "Evan",
+        "middle_name": "",
+        "mailing_name": "Evan Zhou",
+        "zip_code": "12345",
+        "address1": "523 E Florida St",
+        "address2": "",
+        "country": "US",
+        "city": "Van Nuys",
+        "state": "TX"
+      }, {
+        "customer_id": 4367,
+        "name": "Add Zhou",
+        "first_name": "Add",
+        "last_name": "Add",
+        "middle_name": "",
+        "mailing_name": "Add Zhou",
+        "zip_code": "11111",
+        "address1": "Keji Rd.2nd, No.68",
+        "address2": "",
+        "country": "CA",
+        "city": "Nuys",
+        "state": "AB"
+      }, {
+        "customer_id": 2359,
+        "name": "Newff Zhou",
+        "first_name": "Newff",
+        "last_name": "Newff",
+        "middle_name": "",
+        "mailing_name": "Newff Zhou",
+        "zip_code": "",
+        "address1": "",
+        "address2": "",
+        "country": "",
+        "city": "",
+        "state": ""
+      }],
+      "payer_id": 166,
+      "new_payer_id": 0
+    }
+  }
+}

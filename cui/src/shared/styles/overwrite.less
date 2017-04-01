@@ -1,0 +1,44 @@
+@import "./variables.less";
+
+b, strong, .strong{
+  font-weight: @headings-font-weight;
+}
+
+/**
+ * For following UI design:
+ * 		1. Override modal style on PC.
+ * 		2. Using default style on Tablet and Mobile.
+ */
+@media @media-breakpoint-md {
+  .modal-header {
+    padding: 21px 30px;
+    > h3 {
+      font-size: 24px;
+    }
+    .modal-close {
+      right: 30px;
+    }
+  }
+  .modal-body {
+    padding: 30px 30px 0;
+  }
+  .modal-footer{
+    padding: 30px;
+    .btn + .btn {
+      margin-left: 10px;
+    }
+  }
+}
+
+.form__group--error {
+  .dropdown {
+    &__button.expand, &__button.collapse {
+      color: @state-danger-text;
+      border-color: @state-danger-border;
+      background-color: @state-danger-bg;
+      .icon-chevron-up, .icon-chevron-down {
+        color: @state-danger-text;
+      }
+    }
+  }
+}

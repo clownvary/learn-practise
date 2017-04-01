@@ -1,0 +1,39 @@
+@import "~shared/styles/variables.less";
+
+.payment-comp {
+  .creditcard-list {
+    margin: 20px 0 10px;
+    list-style: none;
+    > li {
+      border-radius: 5px;
+      margin: 10px 0;
+      border: 1px solid @afx-panel-border-color;
+      &:hover {
+        border-color: @tags-input-icon-color;
+      }
+      .radio__text {
+        .flex("flexbox");
+        padding: 10px 20px;
+        > .aaui-flexbox {
+          flex-grow: 1;
+        }
+      }
+      P {
+        margin: 0;
+      }
+      .icon {
+        font-size: 22px;
+      }
+    }
+    .creditcard-info {
+      text-align: right;
+      .card-number {
+        margin-bottom: 4px;
+      }
+      .card-expiration {
+        font-size: @font-size-less-base;
+        color: @rolling-stone;
+      }
+    }
+  }
+}

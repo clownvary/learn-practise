@@ -1,0 +1,55 @@
+port = new Random().nextInt(5000 - 4000) + 4000
+sourceBranch = env.gitlabBranch ?: env.gitlabSourceBranch
+validBranches = [
+  'master'
+]
+
+// set name of job
+currentBuild.displayName = sourceBranch
+
+node {
+  gitlabCommitStatus {
+    stage ('Checkout') {
+      checkout scm
+    }
+
+    stage ('Install Package') {
+      sh 'npm install --no-spin && npm update react-base-ui, eslint-config-an'
+    }
+
+    stage ('Build Prod') {
+      sh 'npm run prod'
+    }
+
+    stage ('Lint') {
+      try {
+        sh 'npm run lint:checkstyle'
+      } catch(Exception e) {
+        // possibly send email here, if master branch
+        error 'Linting failed'
+      } finally {
+        step([
+          $class: 'CheckStylePublisher',
+          canComputeNew: false,
+          defaultEncoding: '',
+          failedTotalAll: '1',
+          healthy: '',
+          pattern: 'eslint-checkstyle.xml',
+          unHealthy: '1'
+        ])
+      }
+    }
+
+    stage ('Test') {
+      try {
+        //sh "npm test -- --port=${port}"
+      } catch(Exception e) {
+        // possibly send email here, if master branch
+        error 'Testing failed'
+      } finally {
+        //junit 'test/test-results.xml'
+      }
+    }
+
+  }
+}

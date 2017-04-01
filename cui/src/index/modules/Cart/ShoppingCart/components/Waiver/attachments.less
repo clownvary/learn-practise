@@ -1,0 +1,49 @@
+@import "~shared/styles/variables.less";
+
+.waiver-layouts {
+  .attachments {
+    .aaui-modal-footer {
+      padding: 15px 30px;
+    }
+  }
+  .attachment {
+    .flex("flexbox");
+    flex-wrap: nowrap;
+    flex-direction: row;
+    margin: 10px 0px 0px 0px;
+    &-form-item {
+      .flex("flexbox");
+      .flex-layout("middle");
+      flex-wrap: nowrap;
+      flex-direction: row;
+      padding-right: 5px;
+      .input-group {
+        width: 62px;
+      }
+      &.form-item-required::after {
+        padding: 0 5px;
+        color: #d93a20;
+        content: "*";
+      }
+    }
+    &-content {
+      flex: 1 0;
+      .icon-ex-link-m {
+        color: @rolling-stone;
+      }
+    }
+    &-alert-message {
+      h3 {
+        margin-bottom: 5px;
+      }
+      .atch-msg-content {
+        max-height: 300px;
+        padding: 15px;
+        margin-bottom: 1px;
+        border-radius: 3px;
+        border: 1px solid #ccc;
+        overflow: auto;
+      }
+    }
+  }
+}

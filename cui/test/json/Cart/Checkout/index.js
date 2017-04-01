@@ -1,0 +1,12 @@
+import './get_amsaccountid.json';
+import './get_amstoken.json';
+import './get_billingaddresses.json';
+import './get_countrystates.json';
+import './get_creditcards.json';
+import './get_creditcardtypes.json';
+import './get_echecks.json';
+import './get_ordersummary.json';
+import './post_createbillingaddress.json';
+import './post_creditcards.json';
+import './post_updatebillingaddress.json';
+import './post_changepayer.json';

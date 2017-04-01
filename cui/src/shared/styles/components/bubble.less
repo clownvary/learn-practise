@@ -1,0 +1,32 @@
+@import "../variables.less";
+
+.afx-bubble {
+  position: relative;
+  background: @bubble-background;
+  display: inline-block;
+  line-height: 26px;
+  padding: 0 10px;
+  border-radius: 12px;
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 0;
+    height: 0;
+    z-index: 1;
+    border-style: solid;
+  }
+  .bubble-arrow("left");
+  &-top {
+    .bubble-arrow("top");
+  }
+  &-right {
+    .bubble-arrow("right");
+  }
+  &-bottom {
+    .bubble-arrow("bottom");
+  }
+  &-left {
+    .bubble-arrow("left");
+  }
+}

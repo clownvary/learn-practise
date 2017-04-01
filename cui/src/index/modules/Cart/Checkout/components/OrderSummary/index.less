@@ -1,0 +1,22 @@
+@import "~shared/styles/variables.less";
+
+.ordersummary-panel {
+  .flex("flexbox");
+  flex-direction: column;
+  > * {
+    width: 100%;
+  }
+  button {
+    width: 100%;
+    margin: 20px 0 0 0;
+  }
+  @media @media-breakpoint-md {
+    button {
+      width: 90%;
+    }
+    &.afx-panel {
+      border: 0px;
+      padding: 0;
+    }
+  }
+}

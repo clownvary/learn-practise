@@ -1,0 +1,31 @@
+.cui-navigation{
+  .GreenYellow-bar {
+    border-bottom: 1px solid #ccc;
+    background: linear-gradient(to bottom,  #efeacc 0%,#ded4b9 100%);
+    > li:not(.mycart) {
+      color: #5E5E5E;
+      text-shadow: 0px 0px 0px rgba(000,000,000,0), 0px 1px 0px rgba(255,255,255,1);
+      > a {
+        color: #5E5E5E;
+        &.active {
+          color: #fff;
+          font-weight: bold;
+          background: linear-gradient(to top, #adadad 0%, #bcbcbc);
+          background: -webkit-gradient( linear, left top, left bottom, from(#adadad), to(#bcbcbc));
+          box-shadow: 0px 0px 0px rgba(000,000,000,0), inset 0px 6px 30px rgba(087,087,087,0.4);
+          text-shadow: 0px -1px 0px rgba(000,000,000,0.4), 0px 1px 0px rgba(255,255,255,0.3);
+        }
+        &:hover {
+          box-shadow: 0px 0px 0px rgba(000,000,000,0), inset 0px 0px 10px rgba(168,168,168,1);
+        }
+      }
+    }
+    .mycart {
+      background: linear-gradient(to bottom,  #86a830 0%,#78972b 100%);
+      &:hover {
+        background: linear-gradient(to bottom,  #94ba35 0%,#86a830 100%);
+        text-shadow: -1px -1px 0px rgba(158,148,139,0.2), 0px 1px 0px rgba(250,236,226,0.2);
+      }
+    }
+  }
+}

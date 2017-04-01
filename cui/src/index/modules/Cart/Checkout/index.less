@@ -1,0 +1,20 @@
+@import "~shared/styles/variables.less";
+
+.page-Checkout {
+  &-payment {
+    padding: 20px;
+    h2 {
+      margin-bottom: 20px;
+    }
+  }
+  .layout-width-limited {
+    width: 440px;
+    flex: 0 0 440px;
+  }
+  @media @media-breakpoint-xs {
+    .layout-width-limited {
+      width: 100%;
+      flex: 0 0 100%;
+    }
+  }
+}

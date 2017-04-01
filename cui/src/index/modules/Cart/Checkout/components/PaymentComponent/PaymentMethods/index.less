@@ -1,0 +1,49 @@
+@import "~shared/styles/variables.less";
+
+@payment-tab-active-color: #40b0dc;
+
+.payment-comp {
+  &-methods {
+    .flex("flexbox");
+    .flex("margin", 20);
+    flex-wrap: nowrap;
+  }
+  &-tab {
+    flex: 1 1;
+    > .tab-box {
+      height: 90px;
+      border-radius: 5px;
+      text-align: center;
+      padding-top: 15px;
+      cursor: pointer;
+      border: 1px solid @afx-panel-border-color;
+      > div {
+        .flex("flexbox");
+        .flex-layout("center");
+        flex-direction: column;
+        > .icon {
+          font-size: 28px;
+          margin-bottom: 6px;
+        }
+      }
+      &:hover {
+        border-color: @tags-input-icon-color;
+      }
+    }
+  }
+  &-tab-active {
+    > .tab-box {
+      &, h4 {
+        color: @payment-tab-active-color;
+      }
+      cursor: default;
+      border-width: 2px;
+      padding-top: 14px;
+      border-color: @payment-tab-active-color;
+      background-color: @state-info-bg;
+      &:hover {
+        border-color: #40b0dc;
+      }
+    }
+  }
+}

@@ -1,0 +1,60 @@
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  margin: 0;
+  padding: 0;
+}
+
+// [‎9/‎12/‎2016 2:03 PM] Zhang, Ethan (Chengdu):
+// H1 36-24
+// H2 24-16
+// H3 20-16
+// H5 14-14
+// H4 16-14
+
+.ProximaNova--loaded {
+	body{
+		@media @media-breakpoint-xs {
+	    font: @font-size-xs/@line-height-base @font-family-base;
+	  }
+	  @media @media-breakpoint-sm {
+	    font: @font-size-sm/@line-height-base @font-family-base;
+	  }
+	  @media @media-breakpoint-md {
+	    font: @font-size-md/@line-height-base @font-family-base;
+	  }
+	}
+  .system-font-family {
+    font-family: @font-family-base;
+  }
+}
+
+// .FontAwesome--loaded [class*='icon-'] {
+//   font-family: FontAwesome;
+//   font-weight: normal;
+//   font-style: normal;
+//   font-variant: normal;
+//   line-height: 1;
+//   text-transform: none;
+//   speak: none;
+//   -webkit-font-smoothing: antialiased;
+//   -moz-osx-font-smoothing: grayscale;
+// }
+
+ul {
+	padding: 0;
+	margin: 0;
+	li {
+		//ANE-56038 the custom html may contain li, and need be shown as expected.
+		//TODO  need discuss with Bill
+		//list-style: none;
+	}
+}
+
+input {
+  &::-ms-clear{
+    display: none;
+  }
+  &::-ms-reveal{
+    display: none;
+  }
+}

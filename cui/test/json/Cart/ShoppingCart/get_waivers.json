@@ -1,0 +1,122 @@
+{
+  "headers": {
+    "response_code": "0000",
+    "response_message": "Succeesul",
+    "page_info": {
+      "order_by": "",
+      "total_records": 0,
+      "total_records_per_page": 30,
+      "page_number": 1,
+      "order_option": "ASC",
+      "total_page": 1
+    }
+  },
+  "body": {
+    "waivers": {
+      "waiver_text_donation": "",
+      "waiver_text": "This is online waiver from Web Admin&amp;gt; Active Staff&lt;br/&gt;This is Activity/Daycare Programs!This is online waiver from Web Admin&amp;gt; Active Staff&lt;br/&gt;This is Activity/Daycare Programs!This is online waiver from Web Admin&amp;gt; Active Staff&lt;br/&gt;This is Activity/Daycare Programs!This is online waiver from Web Admin&amp;gt; Active Staff&lt;br/&gt;This is Activity/Daycare Programs!This is online waiver from Web Admin&amp;gt; Active Staff&lt;br/&gt;This is Activity/Daycare Programs!This is online waiver from Web Admin&amp;gt; Active Staff&lt;br/&gt;This is Activity/Daycare Programs!This is online waiver from Web Admin&amp;gt; Active Staff&lt;br/&gt;This is Activity/Daycare Programs!This is online waiver from Web Admin&amp;gt; Active Staff&lt;br/&gt;This is Activity/Daycare Programs!This is online waiver from Web Admin&amp;gt; Active Staff&lt;br/&gt;This is Activity/Daycare Programs!This is online waiver from Web Admin&amp;gt; Active Staff&lt;br/&gt;This is Activity/Daycare Programs!This is online waiver from Web Admin&amp;gt; Active Staff&lt;br/&gt;This is Activity/Daycare Programs!This is online waiver from Web Admin&amp;gt; Active Staff&lt;br/&gt;This is Activity/Daycare Programs!This is online waiver from Web Admin&amp;gt; Active Staff&lt;br/&gt;This is Activity/Daycare Programs!",
+      "waiver_initials_online_text": "",
+      "require_waiver_scrollbottom": true,
+      "attachments": [{
+        "attached_checklist_item_Id": -2,
+        "activity_id": 0,
+        "dcprogram_id": 0,
+        "package_id": 863,
+        "event_type_id": 0,
+        "stage": {
+          "uploaded_file_content_type": null,
+          "item_type": 1,
+          "uploaded_file_href_text": null,
+          "description": "1-waiveraa - Global",
+          "uploaded_fileId": 0,
+          "id": 40,
+          "item_text": "1-waiveraa - Global"
+        },
+        "show_online": true,
+        "item_signed_online": true,
+        "due_increment": 0,
+        "is_required": false,
+        "waiver_duration": 0,
+        "signature_line": false,
+        "required_before_completing_transaction": true,
+        "age_limit": 0,
+        "show_on_online_enrollment_page": false,
+        "require_initials_online": true,
+        "print_payer_and_customer": true,
+        "checked": false,
+        "online_waiver_initials": "fwfh",
+        "waiver_in_force": false,
+        "is_global_waiver": true,
+        "reno": 0,
+        "description": "1-waiveraa - Global [Membership Sale/Renewal: ANE-47333(Uses Available &amp;gt;0)]",
+        "attachment_link": ""
+      }, {
+        "attached_checklist_item_Id": -3,
+        "activity_id": 0,
+        "dcprogram_id": 0,
+        "package_id": 863,
+        "event_type_id": 0,
+        "stage": {
+          "uploaded_file_content_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          "item_type": 1,
+          "uploaded_file_href_text": "block",
+          "description": "3 sally checklist - Global",
+          "uploaded_fileId": 192,
+          "id": 40,
+          "item_text": "are you &lt;br/&gt;sure?"
+        },
+        "show_online": true,
+        "item_signed_online": true,
+        "due_increment": 0,
+        "is_required": false,
+        "waiver_duration": 0,
+        "signature_line": false,
+        "required_before_completing_transaction": true,
+        "age_limit": 0,
+        "show_on_online_enrollment_page": false,
+        "require_initials_online": true,
+        "print_payer_and_customer": false,
+        "checked": false,
+        "online_waiver_initials": null,
+        "waiver_in_force": false,
+        "is_global_waiver": true,
+        "reno": 1,
+        "description": "3 sally checklist - Global [Membership Sale/Renewal: ANE-47333(Uses Available &amp;gt;0)]",
+        "attachment_link": "http://activenetdev0.active.com/jettytest11/servlet/downloadFile.sdi?uploadedfile_id=192&amp;attachment=true"
+      }, {
+        "attached_checklist_item_Id": -3,
+        "activity_id": 0,
+        "dcprogram_id": 0,
+        "package_id": 777,
+        "event_type_id": 0,
+        "stage": {
+          "uploaded_file_content_type": "image/png",
+          "item_type": 1,
+          "uploaded_file_href_text": "booked",
+          "description": "16.1 sally checklist ane-48830",
+          "uploaded_fileId": 193,
+          "id": 42,
+          "item_text": "16.1 sally checklist ane-48830"
+        },
+        "show_online": true,
+        "item_signed_online": true,
+        "due_increment": 0,
+        "is_required": false,
+        "waiver_duration": 0,
+        "signature_line": false,
+        "required_before_completing_transaction": true,
+        "age_limit": 0,
+        "show_on_online_enrollment_page": false,
+        "require_initials_online": false,
+        "print_payer_and_customer": true,
+        "checked": true,
+        "online_waiver_initials": null,
+        "waiver_in_force": false,
+        "is_global_waiver": true,
+        "reno": 8,
+        "description": "16.1 sally checklist ane-48830 [Membership Sale/Renewal: ACLPK non-renewable membership]",
+        "attachment_link": "http://activenetdev0.active.com/jettytest11/servlet/downloadFile.sdi?uploadedfile_id=193"
+      }]
+    }
+  }
+}

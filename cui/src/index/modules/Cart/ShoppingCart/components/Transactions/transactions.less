@@ -1,0 +1,74 @@
+@import "~shared/styles/variables.less";
+
+.transactions-layouts {
+  .transactions {
+    padding: 0 10px;
+  }
+  .transaction {
+    margin: 24px 0;
+    &-header {
+      flex-wrap: nowrap;
+      .collapseTrigger {
+        &:hover, &:active, &:focus, &:visited {
+          cursor: pointer;
+          text-decoration: none;
+        }
+        i {
+          margin-top: -2px;
+          margin-left: 4px;
+        }
+      }
+      .afx-col:first-child {
+        flex: 0 0 70%;
+        flex-wrap: wrap;
+        word-wrap: break-word;
+        word-break: break-all;
+      }
+      .afx-col:last-child {
+        flex: 0 0 30%;
+        text-align: right;
+      }
+    }
+    &-detail{
+      > div:first-child{
+        text-transform: uppercase;
+        color: @rolling-stone;
+      }
+      > div{
+        margin-top: 10px;
+      }
+      .label{
+        display: inline-block;
+        margin-top: 10px;
+        + .label{
+          margin-left:5px;
+        }
+      }
+    }
+    &-operation{
+      a{
+        text-decoration: none;
+        cursor: pointer;
+        +a{
+          margin-left:20px;
+        }
+      }
+    }
+    .bg-gray-1 {
+      padding:0 10px;
+      background-color: #f8fafb;
+    }
+    .bg-gray-2 {
+      text-align:right;
+      padding:10px;
+      line-height:24px;
+      background-color: #eff5f8;
+      div {
+        span {
+          display: inline-block;
+          width: 90px;
+        }
+      }
+    }
+  }
+}

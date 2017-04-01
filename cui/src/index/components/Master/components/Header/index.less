@@ -1,0 +1,68 @@
+@import "~shared/styles/variables.less";
+
+.create-cui-wrap(header);
+
+.cui-header{
+  color: #999;
+  font-size: 14px;//for matching old style.
+  padding: 6px 0px;
+  .flex("flexbox");
+  .cui-header-logo{
+    width: 50%;
+  }
+  .cui-header-opts{
+    width: 50%;
+    text-align: right;
+    margin-bottom: 10px;
+    > span, a {
+      color: #999;
+      text-decoration: none;
+      font-size: 12px;
+    }
+    a {
+      padding: 0px 5px;
+      &:hover, &:active {
+        color: #005580;
+        text-decoration: underline;
+      }
+    }
+    > span:last-child {
+      a {
+        padding-right: 0;
+      }
+    }
+    > b {
+      margin-right: 18px;
+      color: #717171;
+      font-size: 12px;
+    }
+    .active {
+      color: #f28500;
+    }
+  }
+}
+
+.cui-app-theme-new {
+  .cui-header{
+    font-size: 13px;
+    img {
+      margin: 10px 0;
+    }
+  }
+}
+
+.cui-app-theme-legacy {
+  .cui-header-wrap {
+    .netCUI-font-family;
+  }
+  .cui-header{
+    padding: 5px 0 8px 0;
+    img {
+      margin: 0;
+      padding: 0;
+      max-width: 460px;
+      max-height: 80px;
+      border-radius: 4px;
+    }
+  }
+}
