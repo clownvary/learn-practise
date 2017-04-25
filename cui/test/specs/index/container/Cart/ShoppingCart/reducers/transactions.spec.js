@@ -12,7 +12,8 @@ describe('index/modules/Cart/ShoppingCart/reducers/transactions', () => {
     expect(is(expectedInitialState, transactionsReducer(undefined, {}))).to.be.true;
   });
 
-  it('Should fetch transactions data successfully', () => {
+  // TODO after react-base-ui
+  it.skip('Should fetch transactions data successfully', () => {
     const { TRANSACTIONS_UI_LIST } = actionTypes;
     const returnState = transactionsReducer(undefined, {
       type: TRANSACTIONS_UI_LIST,

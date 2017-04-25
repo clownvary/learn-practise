@@ -1,7 +1,8 @@
 import { fromJS } from 'immutable';
+import { ErrorObj } from 'react-base-ui/lib/errors';
 import { createFSA } from 'react-base-ui/lib/utils';
-import AMS from 'shared/business/creditCard/ams-security-api';
-import { maskCard } from 'shared/business/creditCard/validation';
+import { reportError } from 'react-base-ui/lib/actions/error';
+import { payment as paymentHelper } from 'react-base-ui/lib/helper';
 import API from '../api';
 import * as PaymentTypes from '../consts/paymentTypes';
 import {
@@ -105,6 +106,7 @@ export const addCreditCardAction = (moduleName, {
   ccCardTypes,
   ccCardTypeItem = {}
 }) => (dispatch) => {
+  const { validation: { maskCard } } = paymentHelper;
   const maskedCardNumber = maskCard(ccNumber);
   const cardNumber = maskedCardNumber.replace(/xxx/g, '');
   const cardExpiration = `${ccExpiryMonth}/${ccExpiryYear}`;
@@ -122,6 +124,7 @@ export const addCreditCardAction = (moduleName, {
      */
     .then(({ body: { ams_token: { modulus = '', exponent = '' } } }) => {
       if (modulus !== 'localdemo') {
+        const { AMS } = paymentHelper;
         const request = new AMS.AccountInfo();
         request.setCCNumber(ccNumber);
         request.setCCExpMonth(`${ccExpiryMonth}`);
@@ -141,13 +144,13 @@ export const addCreditCardAction = (moduleName, {
           is_ecp: false
         });
       }
-      return {
+      return Promise.resolve({
         body: {
           ams_account: {
             wallet_id: 'Demo AccountID'
           }
         }
-      };
+      });
     })
     /**
      * Step 3:
@@ -164,13 +167,13 @@ export const addCreditCardAction = (moduleName, {
         card_type_id: ccCardTypeItem.get('id')
       };
       if (ccSaveForFurture) {
-        return API.saveCreditCard({ body: { ...payItem } });
+        return API.saveCreditCard({ body: [{ ...payItem }] });
       }
-      return {
+      return Promise.resolve({
         id: payItemId,
         card_type_flag: ccCardTypeItem.get('card_type_id'),
         ...payItem
-      };
+      });
     })
     /**
      * Step 4: Add new added credit card info to ui layer.
@@ -182,21 +185,29 @@ export const addCreditCardAction = (moduleName, {
       if (ccSaveForFurture) {
         return dispatch(fetchSavedCreditCardsAction(ccCardTypes.toJS()));
       }
-      return dispatch(addTempCreditCardActoin({
+      dispatch(addTempCreditCardActoin({
         ...payItem, ...{ card_number: cardNumber }
       }));
+      return Promise.resolve();
     })
     /**
      * Step 5: Select the new added credit card item.
      */
-    .then(() =>
-      dispatch(selectItemActoin(moduleName, PaymentTypes.CREDIT_CARD, payItemId, true)));
+    .then(() => dispatch(selectItemActoin(moduleName, PaymentTypes.CREDIT_CARD, payItemId, true)));
 };
 
 export const addPayItemActoin = (moduleName, typeName, payItemInfo) => (dispatch) => {
   switch (typeName) {
     case PaymentTypes.CREDIT_CARD:
-      return dispatch(addCreditCardAction(moduleName, payItemInfo));
+      return addCreditCardAction(moduleName, payItemInfo)(dispatch).catch((error) => {
+        if (ErrorObj.isErrorObj(error)) {
+          const { data: { response: { isValidationError, body } } } = error;
+          if (isValidationError) {
+            return Promise.resolve({ errors: body.errors });
+          }
+        }
+        return dispatch(reportError(error));
+      });
     case PaymentTypes.ECHECK:
       return dispatch(/* add echeck action */);
     default:

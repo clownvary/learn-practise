@@ -6,7 +6,7 @@ const transctionsPath = `${window.__siteBaseName}/transactions`;
 
 const apiSet = {};
 
-apiSet.getCountryState = createAPI(HttpMethodEnum.GET, `${systemPath}/countries`);
+apiSet.getCountryState = createAPI(HttpMethodEnum.GET, `${systemPath}/country?default={{isDefault}}`);
 apiSet.getBillingAddress = createAPI(HttpMethodEnum.GET, `${checkoutPath}/billing`);
 apiSet.createBillingAddress = createAPI(HttpMethodEnum.POST, `${checkoutPath}/billing`);
 apiSet.updateBillingAddress = createAPI(HttpMethodEnum.PUT, `${checkoutPath}/billing`);

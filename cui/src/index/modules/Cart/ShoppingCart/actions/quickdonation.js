@@ -1,6 +1,6 @@
 import { createFSA } from 'react-base-ui/lib/utils';
 import { commonPageRenderActions } from 'index/components/Master/actions';
-import { syncLegencyCUISessionAction } from 'shared/actions/syncSession';
+import { syncLegencyCUISessionAction } from 'index/actions/syncSession';
 import { fetchTransactionsAction } from './transactions';
 import { fetchWaiversAction } from './waiver';
 import { getShoppingCartNeedPayAction } from './checkout';

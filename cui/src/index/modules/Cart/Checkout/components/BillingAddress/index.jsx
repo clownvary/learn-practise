@@ -1,11 +1,10 @@
 import React from 'react';
 import { injectIntl } from 'react-intl';
 
-import UIComponent from 'shared/components/UIComponent';
 import BillingAddressList from './BillingAddressList';
 import BillingAddressForm from './BillingAddressForm';
 
-export class BillingAddress extends UIComponent {
+export class BillingAddress extends React.PureComponent {
   static propTypes = {
     data: React.PropTypes.shape({
       toJS: React.PropTypes.func
@@ -14,7 +13,8 @@ export class BillingAddress extends UIComponent {
       canUpdate: React.PropTypes.bool.isRequired,
       useAddressVerification: React.PropTypes.bool.isRequired,
       canCreate: React.PropTypes.bool.isRequired,
-      hideBilling: React.PropTypes.bool.isRequired
+      hideBilling: React.PropTypes.bool.isRequired,
+      isInternational: React.PropTypes.bool.isRequired
     }).isRequired,
 
     selectBillingAddressAction: React.PropTypes.func.isRequired,
@@ -25,8 +25,21 @@ export class BillingAddress extends UIComponent {
     changeFormFieldAction: React.PropTypes.func.isRequired,
     hideBillingAddressFormAction: React.PropTypes.func.isRequired,
     submitAction: React.PropTypes.func.isRequired,
-    cancelAction: React.PropTypes.func.isRequired
+    cancelAction: React.PropTypes.func.isRequired,
+    uiSetIsInternationalAction: React.PropTypes.func.isRequired
   };
+
+  componentWillMount() {
+    const {
+      config: { isInternational },
+      getCountryStateAction,
+      getBillingAddressAction,
+      uiSetIsInternationalAction
+    } = this.props;
+    getCountryStateAction(isInternational)
+      .then(() => getBillingAddressAction())
+      .then(() => uiSetIsInternationalAction({ isInternational }));
+  }
 
   render() {
     const { config, data } = this.props;

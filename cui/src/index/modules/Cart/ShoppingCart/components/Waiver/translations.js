@@ -9,7 +9,7 @@ export default defineMessages({
   },
   default_name: {
     id: `${PREFIX}.default_name`,
-    defaultMessage: 'waiver'
+    defaultMessage: 'Waiver'
   },
   description_01: {
     id: `${PREFIX}.description_01`,

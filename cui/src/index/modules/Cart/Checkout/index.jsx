@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import UIComponent from 'shared/components/UIComponent';
 import PageFooter from 'shared/components/PageFooter';
 import { FormattedMessage } from 'shared/translation/formatted';
 
@@ -26,20 +25,21 @@ import {
   selectCountryAction,
   changeFormFieldAction,
   submitAction,
-  cancelAction
+  cancelAction,
+  uiSetIsInternationalAction
 } from './actions';
 
 import selfMessages from './translations';
 
 import './index.less';
 
-export class Checkout extends UIComponent {
+export class Checkout extends React.PureComponent {
 
   static contextTypes = {
     configurations: React.PropTypes.object
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const { configurations } = this.context;
     this.props.fetchCreditCardTypesAction().then(({ body: { card_types } }) => {
       if (configurations.get('show_prior_cc')) {
@@ -49,9 +49,6 @@ export class Checkout extends UIComponent {
     if (configurations.get('show_prior_ecp')) {
       // this.props.fetchSavedEChecksAction();
     }
-
-    this.props.getCountryStateAction();
-    this.props.getBillingAddressAction();
   }
 
   render() {
@@ -63,10 +60,12 @@ export class Checkout extends UIComponent {
       hideBilling: configurations.get('hide_billing_name_address_on_confirmation'),
       canCreate: configurations.get('add_payer_online'),
       canUpdate: configurations.get('online_cust_addr_change'),
-      international: configurations.get('international_addr'),
+      isInternational: configurations.get('international_addr'),
       useAddressVerification: configurations.get('verisign_use_avs')
     };
     const billingAddressActions = {
+      getCountryStateAction: this.props.getCountryStateAction,
+      getBillingAddressAction: this.props.getBillingAddressAction,
       selectBillingAddressAction: this.props.selectBillingAddressAction,
       onUpdateBillingAddressAction: this.props.onUpdateBillingAddressAction,
 
@@ -75,7 +74,8 @@ export class Checkout extends UIComponent {
       changeFormFieldAction: this.props.changeFormFieldAction,
       hideBillingAddressFormAction: this.props.hideBillingAddressFormAction,
       submitAction: this.props.submitAction,
-      cancelAction: this.props.cancelAction
+      cancelAction: this.props.cancelAction,
+      uiSetIsInternationalAction: this.props.uiSetIsInternationalAction
     };
     return (
       <div className="page-Checkout">
@@ -130,6 +130,7 @@ export default connect(
     selectCountryAction,
     changeFormFieldAction,
     submitAction,
-    cancelAction
+    cancelAction,
+    uiSetIsInternationalAction
   }
 )(Checkout);

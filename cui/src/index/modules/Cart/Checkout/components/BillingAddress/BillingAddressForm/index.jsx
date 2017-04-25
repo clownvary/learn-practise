@@ -5,22 +5,22 @@ import Button from 'react-aaui/lib/Button';
 import { injectIntl } from 'react-intl';
 import classNames from 'classnames';
 
-import UIComponent from 'shared/components/UIComponent';
 import { FormattedMessage } from 'shared/translation/formatted';
-import stringHelper from 'shared/utils/stringHelper';
+import stringHelper from 'react-base-ui/lib/helper/string';
 import { billingAddressFormFields as fields, formModes } from '../../../consts';
 
 import selfMessages from './translations';
 import './index.less';
 
-export class BillingAddressForm extends UIComponent {
+export class BillingAddressForm extends React.PureComponent {
   static propTypes = {
     data: React.PropTypes.shape({
       toJS: React.PropTypes.func,
       get: React.PropTypes.func
     }).isRequired,
     config: React.PropTypes.shape({
-      canCreate: React.PropTypes.bool.isRequired
+      canCreate: React.PropTypes.bool.isRequired,
+      isInternational: React.PropTypes.bool.isRequired
     }).isRequired,
 
     onCreate: React.PropTypes.func.isRequired,
@@ -36,10 +36,52 @@ export class BillingAddressForm extends UIComponent {
       errMessage ?
         <div className="form__filed__error">
           <i className="icon icon-close-circle" />
-          <FormattedMessage {...selfMessages[errMessage]} />
+          {
+            selfMessages[errMessage] ?
+              <FormattedMessage {...selfMessages[errMessage]} />
+              : errMessage
+          }
         </div>
         : null
     );
+
+  renderFormField = (
+    fieldType,
+    fieldLabelObj,
+    fieldControl,
+    fieldError,
+    required) =>
+    (
+      <div
+        className={classNames(
+          'form__wraper',
+          'form__group',
+          {
+            'form__group--error':
+            !stringHelper.isNullOrEmpty(fieldError)
+          })}
+      >
+        <div className="layout-width-limited">
+          <div className="aaui-flexbox afx-xl-mg-10">
+            <label
+              className={classNames(
+                'form__label',
+                { 'form__label--require': required },
+                'afx-col',
+                'afx-xl-4-12')}
+              htmlFor={`frm${fieldType}`}
+            >
+              {fieldLabelObj && <FormattedMessage {...fieldLabelObj} />}
+            </label>
+            <div className="form__control afx-col afx-xl-8-12">
+              {fieldControl}
+              {this.renderError(fieldError)}
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+
 
   render() {
     const {
@@ -56,6 +98,7 @@ export class BillingAddressForm extends UIComponent {
     const isFormHeaderDisplay = data.get('isFormHeaderDisplay');
     const formErrors = data.get('formErrors');
     const formMode = data.get('formMode');
+    const isStateShownAsList = data.get('isStateShownAsList');
 
     return (
       <div className="billingaddressformwrapper">
@@ -71,289 +114,181 @@ export class BillingAddressForm extends UIComponent {
             : null
         }
         {
-          isFormDisplay ?
-
-
+          isFormDisplay &&
             <div className="billingaddressform">
+
               {
-                formMode === formModes.CREATE ?
-                  <div
-                    className={classNames(
-                      'form__wraper',
-                      'form__group',
-                      {
-                        'form__group--error':
-                        !stringHelper.isNullOrEmpty(formErrors.get(fields.FIRST))
-                      })}
-                  >
-                    <div className="layout-width-limited">
-                      <div className="aaui-flexbox afx-xl-mg-10">
-                        <label className="form__label form__label--require afx-col afx-xl-4-12" htmlFor="frmFirstName">
-                          <FormattedMessage {...selfMessages.labelFirstName} />
-                        </label>
-                        <div className="form__control afx-col afx-xl-8-12">
-                          <Input
-                            id="frmFirstName"
-                            value={formData.get(fields.FIRST)}
-                            maxLength={40}
-                            onBlur={
-                              e => this.props.onChange(fields.FIRST, e.target.value, formMode)
-                              }
-                          />
-                          {this.renderError(formErrors.get(fields.FIRST))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  : null
+                formMode === formModes.CREATE && this.renderFormField(
+                  fields.FIRST,
+                  selfMessages.labelFirstName,
+                  <Input
+                    id={`frm${fields.FIRST}`}
+                    maxLength={40}
+                    value={formData.get(fields.FIRST)}
+                    onBlur={
+                      e => this.props.onChange(fields.FIRST, e.target.value, formMode)
+                    }
+                  />,
+                  formErrors.get(fields.FIRST),
+                  true
+                )
               }
+
               {
-                formMode === formModes.CREATE ?
-                  <div
-                    className={classNames(
-                      'form__wraper',
-                      'form__group',
-                      {
-                        'form__group--error':
-                        !stringHelper.isNullOrEmpty(formErrors.get(fields.LAST))
-                      })}
-                  >
-                    <div className="layout-width-limited">
-                      <div className="aaui-flexbox afx-xl-mg-10">
-                        <label className="form__label form__label--require afx-col afx-xl-4-12" htmlFor="frmLastName">
-                          <FormattedMessage {...selfMessages.labelLastName} />
-                        </label>
-                        <div className="form__control afx-col afx-xl-8-12">
-                          <Input
-                            id="frmLastName"
-                            maxLength={40}
-                            value={formData.get(fields.LAST)}
-                            onBlur={
-                              e => this.props.onChange(fields.LAST, e.target.value, formMode)
-                              }
-                          />
-                          {this.renderError(formErrors.get(fields.LAST))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  : null
+                formMode === formModes.CREATE && this.renderFormField(
+                  fields.LAST,
+                  selfMessages.labelLastName,
+                  <Input
+                    id={`frm${fields.LAST}`}
+                    maxLength={40}
+                    value={formData.get(fields.LAST)}
+                    onBlur={
+                      e => this.props.onChange(fields.LAST, e.target.value, formMode)
+                    }
+                  />,
+                  formErrors.get(fields.LAST),
+                  true
+                )
               }
+
               {
-                formMode === formModes.UPDATE ?
-                  <div
-                    className={classNames(
-                      'form__wraper',
-                      'form__group',
-                      {
-                        'form__group--error':
-                        !stringHelper.isNullOrEmpty(formErrors.get(fields.MAILINGNAME))
-                      })}
-                  >
-                    <div className="layout-width-limited">
-                      <div className="aaui-flexbox afx-xl-mg-10">
-                        <label className="form__label form__label--require afx-col afx-xl-4-12" htmlFor="frmLastName">
-                          <FormattedMessage {...selfMessages.labelMailingName} />
-                        </label>
-                        <div className="form__control afx-col afx-xl-8-12">
-                          <Input
-                            id="frmMailingName"
-                            maxLength={40}
-                            value={formData.get(fields.MAILINGNAME)}
-                            onBlur={
-                              e => this.props.onChange(fields.MAILINGNAME, e.target.value, formMode)
-                              }
-                          />
-                          {this.renderError(formErrors.get(fields.MAILINGNAME))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  : null
+                formMode === formModes.UPDATE && this.renderFormField(
+                  fields.MAILINGNAME,
+                  selfMessages.labelMailingName,
+                  <Input
+                    id={`frm${fields.MAILINGNAME}`}
+                    maxLength={150}
+                    value={formData.get(fields.MAILINGNAME)}
+                    onBlur={
+                      e => this.props.onChange(fields.MAILINGNAME, e.target.value, formMode)
+                    }
+                  />,
+                  formErrors.get(fields.MAILINGNAME),
+                  true
+                )
               }
-              <div
-                className={classNames(
-                  'form__wraper',
-                  'form__group',
-                  {
-                    'form__group--error':
-                    !stringHelper.isNullOrEmpty(formErrors.get(fields.ADDRESS1))
-                  })}
-              >
-                <div className="layout-width-limited">
-                  <div className="aaui-flexbox afx-xl-mg-10">
-                    <label className="form__label form__label--require afx-col afx-xl-4-12" htmlFor="frmStreetAddress1">
-                      <FormattedMessage {...selfMessages.labelStreetAddress} />
-                    </label>
-                    <div className="form__control afx-col afx-xl-8-12">
-                      <Input
-                        id="frmStreetAddress1"
-                        maxLength={75}
-                        value={formData.get(fields.ADDRESS1)}
-                        onBlur={
-                          e => this.props.onChange(fields.ADDRESS1, e.target.value, formMode)
-                          }
-                      />
-                      {this.renderError(formErrors.get(fields.ADDRESS1))}
-                    </div>
-                  </div>
-                </div>
-              </div>
 
+              {
+                this.renderFormField(
+                  fields.ADDRESS1,
+                  selfMessages.labelStreetAddress,
+                  <Input
+                    id={`frm${fields.ADDRESS1}`}
+                    maxLength={35}
+                    value={formData.get(fields.ADDRESS1)}
+                    onBlur={
+                      e => this.props.onChange(fields.ADDRESS1, e.target.value, formMode)
+                    }
+                  />,
+                  formErrors.get(fields.ADDRESS1),
+                  true
+                )
+              }
 
-              <div
-                className={classNames(
-                  'form__wraper',
-                  'form__group',
-                  {
-                    'form__group--error':
-                    !stringHelper.isNullOrEmpty(formErrors.get(fields.ADDRESS2))
-                  })}
-              >
-                <div className="layout-width-limited">
-                  <div className="aaui-flexbox afx-xl-mg-10">
-                    <label className="form__label afx-col afx-xl-4-12" htmlFor="frmStreetAddress2" />
-                    <div className="form__control afx-col afx-xl-8-12">
-                      <Input
-                        id="frmStreetAddress2"
-                        maxLength={75}
-                        value={formData.get(fields.ADDRESS2)}
-                        onBlur={
-                          e => this.props.onChange(fields.ADDRESS2, e.target.value, formMode)
-                          }
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
+              {
+                this.renderFormField(
+                  fields.ADDRESS2,
+                  '',
+                  <Input
+                    id={`frm${fields.ADDRESS2}`}
+                    maxLength={35}
+                    value={formData.get(fields.ADDRESS2)}
+                    onBlur={
+                      e => this.props.onChange(fields.ADDRESS2, e.target.value, formMode)
+                    }
+                  />,
+                  formErrors.get(fields.ADDRESS2),
+                  false
+                )
+              }
 
+              {
+                config.isInternational && this.renderFormField(
+                  fields.COUNTRY,
+                  selfMessages.labelCountry,
+                  <Dropdown
+                    id={`frm${fields.COUNTRY}`}
+                    placeholder={messages[selfMessages.placeholderCountry.id]}
+                    data={countries.toJS()}
+                    value={selectedCountry.get('value')}
+                    onChange={({ value }) => {
+                      if (value !== selectedCountry.get('value')) {
+                        this.props.onChangeCountry(value, formMode);
+                      }
+                    }}
+                    maxHeight="350px"
+                  />,
+                  formErrors.get(fields.COUNTRY),
+                  true
+                )
+              }
 
-              <div
-                className={classNames(
-                  'form__wraper',
-                  'form__group',
-                  {
-                    'form__group--error':
-                    !stringHelper.isNullOrEmpty(formErrors.get(fields.COUNTRY))
-                  })}
-              >
-                <div className="layout-width-limited">
-                  <div className="aaui-flexbox afx-xl-mg-10">
-                    <label className="form__label form__label--require afx-col afx-xl-4-12" htmlFor="frmCountry">
-                      <FormattedMessage {...selfMessages.labelCountry} />
-                    </label>
-                    <div className="form__control afx-col afx-xl-8-12">
-                      <Dropdown
-                        id="frmCountry"
-                        placeholder={messages[selfMessages.placeholderCountry.id]}
-                        data={countries.toJS()}
-                        value={selectedCountry.get('value')}
-                        onChange={({ value }) => {
-                          if (value !== selectedCountry.get('value')) {
-                            this.props.onChangeCountry(value, formMode);
-                          }
-                        }}
-                        maxHeight="350px"
-                      />
-                      {this.renderError(formErrors.get(fields.COUNTRY))}
-                    </div>
-                  </div>
-                </div>
-              </div>
+              {
+                this.renderFormField(
+                  fields.STATE,
+                  selfMessages.labelStateProvince,
+                  isStateShownAsList ?
+                    <Dropdown
+                      id={`frm${fields.STATE}`}
+                      placeholder={messages[selfMessages.placeholderCStateProvince.id]}
+                      data={selectedCountry.toJS().states || []}
+                      value={selectedState.get('value')}
+                      onChange={
+                        ({ value }) => { this.props.onChange(fields.STATE, value, formMode); }
+                      }
+                      maxHeight="350px"
+                    />
+                    :
+                    <Input
+                      id={`frm${fields.STATE}`}
+                      maxLength={15}
+                      value={formData.get(fields.STATE)}
+                      onBlur={
+                        e => this.props.onChange(fields.STATE, e.target.value, formMode)
+                      }
+                    />,
+                  formErrors.get(fields.STATE),
+                  true
+                )
+              }
 
+              {
+                this.renderFormField(
+                  fields.CITY,
+                  selfMessages.labelCity,
+                  <Input
+                    id={`frm${fields.CITY}`}
+                    maxLength={40}
+                    value={formData.get(fields.CITY)}
+                    onBlur={
+                      e => this.props.onChange(fields.CITY, e.target.value, formMode)
+                    }
+                  />,
+                  formErrors.get(fields.CITY),
+                  true
+                )
+              }
 
-              <div
-                className={classNames(
-                  'form__wraper',
-                  'form__group',
-                  {
-                    'form__group--error':
-                    !stringHelper.isNullOrEmpty(formErrors.get(fields.STATE))
-                  })}
-              >
-                <div className="layout-width-limited">
-                  <div className="aaui-flexbox afx-xl-mg-10">
-                    <label className="form__label form__label--require afx-col afx-xl-4-12" htmlFor="frmStateProvince">
-                      <FormattedMessage {...selfMessages.labelStateProvince} />
-                    </label>
-                    <div className="form__control afx-col afx-xl-8-12">
-                      <Dropdown
-                        id="frmStateProvince"
-                        placeholder={messages[selfMessages.placeholderCStateProvince.id]}
-                        data={selectedCountry.toJS().states || []}
-                        value={selectedState.get('value')}
-                        onChange={
-                          ({ value }) => { this.props.onChange(fields.STATE, value, formMode); }
-                        }
-                        maxHeight="350px"
-                      />
-                      {this.renderError(formErrors.get(fields.STATE))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="form__wraper">
-                <div className="layout-width-limited">
-                  <div className="aaui-flexbox afx-xl-mg-10">
-                    <div
-                      className={classNames(
-                        'form__group',
-                        'afx-col',
-                        'afx-xl-4-7',
-                        {
-                          'form__group--error':
-                          !stringHelper.isNullOrEmpty(formErrors.get(fields.CITY))
-                        })}
-                    >
-                      <div className="aaui-flexbox afx-xl-mg-10">
-                        <label className="form__label form__label--require afx-col afx-xl-7-12" htmlFor="frmCity">
-                          <FormattedMessage {...selfMessages.labelCity} />
-                        </label>
-                        <div className="form__control afx-col afx-xl-5-12">
-                          <Input
-                            id="frmCity"
-                            maxLength={40}
-                            value={formData.get('city')}
-                            onBlur={
-                              e => this.props.onChange(fields.CITY, e.target.value, formMode)
-                            }
-                          />
-                          {this.renderError(formErrors.get(fields.CITY))}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div
-                      className={classNames(
-                        'form__group',
-                        'afx-col',
-                        'afx-xl-3-7',
-                        {
-                          'form__group--error':
-                          !stringHelper.isNullOrEmpty(formErrors.get(fields.ZIPCODE))
-                        })}
-                    >
-                      <div className="aaui-flexbox afx-xl-mg-10">
-                        <label className="form__label form__label--require afx-col afx-xl-4-9" htmlFor="frmZipCode" >
-                          <FormattedMessage {...selfMessages.labelZipCode} />
-                        </label>
-                        <div className="form__control afx-col afx-xl-5-9">
-                          <Input
-                            id="frmZipCode"
-                            maxLength={8}
-                            value={formData.get('zip_code')}
-                            onBlur={
-                              e => this.props.onChange(fields.ZIPCODE, e.target.value, formMode)
-                            }
-                          />
-                          {this.renderError(formErrors.get(fields.ZIPCODE))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              {
+                this.renderFormField(
+                  fields.ZIPCODE,
+                  selfMessages.labelZipCode,
+                  <Input
+                    id={`frm${fields.ZIPCODE}`}
+                    style={{ width: '125px' }}
+                    maxLength={10}
+                    value={formData.get(fields.ZIPCODE)}
+                    onBlur={
+                      (e) => {
+                        this.props.onChange(fields.ZIPCODE, e.target.value, formMode);
+                        this.props.onChange(fields.ZIPCODE_SERVICE);
+                      }
+                    }
+                  />,
+                  formErrors.get(fields.ZIPCODE) || formErrors.get(fields.ZIPCODE_SERVICE),
+                  true
+                )
+              }
 
               <div className="form__wraper form__group">
                 <div className="layout-width-limited">
@@ -398,12 +333,10 @@ export class BillingAddressForm extends UIComponent {
                 </div>
               </div>
             </div>
-            : null
         }
-      </div >
+      </div>
     );
   }
 }
 
 export default injectIntl(BillingAddressForm);
-

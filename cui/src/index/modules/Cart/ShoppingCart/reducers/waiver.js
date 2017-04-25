@@ -1,19 +1,22 @@
 import { fromJS } from 'immutable';
-import reducerHandler from 'shared/utils/reducerHandler';
+import { reducerHandler } from 'react-base-ui/lib/utils';
 import {
   WAIVERS_UI_LIST,
   WAIVERS_UI_HIDE_WARNING,
-  WAIVERS_UI_AGREEMENT
+  WAIVERS_UI_AGREEMENT,
+  WAIVERS_UI_VALIDATE_AGREEMENT
 } from '../consts/actionTypes';
 
 const defaultWaiversAgreements = fromJS({
   final_system_waiver: {
     required: true,
-    value: false
+    value: false,
+    error: false
   },
   final_initials_waiver: {
     required: true,
-    value: ''
+    value: '',
+    error: false
   }
 });
 
@@ -73,6 +76,7 @@ const handlers = {
           const atchID = `${id}_${reno}`;
           s.setIn(['waiversAgreements', atchID], fromJS({
             required,
+            error: false,
             value: requireInitialsOnline ? (onlineWaiverInitials || '') : (!!checked)
           }));
           return atch.set('id', atchID);
@@ -86,8 +90,23 @@ const handlers = {
   },
 
   [WAIVERS_UI_AGREEMENT](state, { payload: { id, value } }) {
-    return state.getIn(['waiversAgreements', id]) === undefined ? state :
-      state.setIn(['waiversAgreements', id, 'value'], value);
+    return state.withMutations((s) => {
+      if (s.getIn(['waiversAgreements', id])) {
+        const required = s.getIn(['waiversAgreements', id, 'required']);
+        s.setIn(['waiversAgreements', id, 'value'], value);
+        s.setIn(['waiversAgreements', id, 'error'], required && !value);
+      }
+    });
+  },
+
+  [WAIVERS_UI_VALIDATE_AGREEMENT](state) {
+    return state.withMutations((s) => {
+      s.set('waiversAgreements', s.get('waiversAgreements').map((agrt) => {
+        const required = agrt.get('required');
+        const value = agrt.get('value');
+        return agrt.set('error', required && !value);
+      }));
+    });
   }
 };
 

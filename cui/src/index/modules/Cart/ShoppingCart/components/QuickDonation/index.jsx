@@ -2,8 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Button from 'react-aaui/lib/Button';
 import Dropdown from 'react-aaui/lib/Dropdown';
-import InputSelect from 'shared/components/InputSelect';
-import UIComponent from 'shared/components/UIComponent';
+import { InputSelect } from 'react-base-ui/lib/components';
 import { FormattedMessage } from 'shared/translation/formatted';
 import buttonsMessages from 'shared/translation/messages/button';
 import selfMessages from './translations';
@@ -11,7 +10,7 @@ import * as quickDonationActions from '../../actions/quickdonation';
 
 import './index.less';
 
-export class QuickDonation extends UIComponent {
+export class QuickDonation extends React.PureComponent {
 
   static contextTypes = {
     configurations: React.PropTypes.object

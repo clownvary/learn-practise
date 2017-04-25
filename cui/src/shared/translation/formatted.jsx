@@ -1,7 +1,18 @@
 import React from 'react';
 import * as ReactIntl from 'react-intl';
-import { decodeHtmlStr, encodeHtmlStr } from 'shared/utils/func';
-import isIE from 'shared/utils/isIE';
+import { encodeHtmlStr, decodeHtmlStr } from 'react-base-ui/lib/utils';
+
+const isIE = () => {
+    let ua = window.navigator.userAgent;
+    let msie = ua.indexOf("MSIE ");
+    let result = false;
+    if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))
+    {
+        result = true;
+    }
+
+    return result;
+}
 
 /**
  * Wrap the components of react-intl for extending them in the future.

@@ -1,8 +1,5 @@
 import path from 'path';
 import webpack from 'webpack';
-import autoprefixer from 'autoprefixer';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
-import CommonsChunkPlugin from 'webpack/lib/optimize/CommonsChunkPlugin';
 import { includeDirs, excludeDirs, includeJadeDirs } from './vars';
 
 const config = {
@@ -16,7 +13,7 @@ const config = {
   },
   resolve: {
     extensions: ['', '.js', '.jsx', '.less', '.json'],
-    modulesDirectories: ['src', 'translations', 'test/json', 'node_modules']
+    modulesDirectories: ['src', 'i18n', 'test/json', 'node_modules']
   },
   resolveLoader: {
     modulesDirectories: ['tasks/loaders', 'node_modules']

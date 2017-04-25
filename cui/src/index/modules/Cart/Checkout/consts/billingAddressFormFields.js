@@ -8,3 +8,4 @@ export const COUNTRY = 'country';
 export const CITY = 'city';
 export const STATE = 'state';
 export const ZIPCODE = 'zip_code';
+export const ZIPCODE_SERVICE = 'zip_code_service';

@@ -1,5 +1,5 @@
 import { fromJS } from 'immutable';
-import reducerHandler from 'shared/utils/reducerHandler';
+import { reducerHandler } from 'react-base-ui/lib/utils';
 
 import {
   CHECKOUT_UI_NEEDPAY,

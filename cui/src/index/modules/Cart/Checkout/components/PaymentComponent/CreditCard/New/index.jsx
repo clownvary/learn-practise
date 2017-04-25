@@ -1,4 +1,3 @@
-import Promise from 'bluebird';
 import React from 'react';
 import { fromJS } from 'immutable';
 import classNames from 'classnames';
@@ -7,18 +6,16 @@ import Button from 'react-aaui/lib/Button';
 import Input from 'react-aaui/lib/Input';
 import Dropdown from 'react-aaui/lib/Dropdown';
 import Popover from 'react-aaui/lib/Popover';
-import Img from 'shared/components/Img';
-import UIComponent from 'shared/components/UIComponent';
-import { ErrorObj, ErrorTypes } from 'react-base-ui/lib/errors';
-
-import typeIcons from 'shared/consts/creditCard/typeIcons';
-import Validation, { getCardTypeItem, checkoutCardTypeId, cardValidation } from 'shared/business/creditCard/validation';
+import { payment as paymentHelper } from 'react-base-ui/lib/helper';
 
 import 'shared/assets/images/img-card-tips.png';
 
 import { injectIntl } from 'react-intl';
 import { FormattedMessage } from 'shared/translation/formatted';
 import selfMessages from '../translations';
+import Validation, { getCardTypeItem, checkoutCardTypeId } from '../validation';
+
+import creditCardConsts from '../../consts/creditCard';
 
 import './index.less';
 
@@ -69,7 +66,7 @@ const initialState = {
   cardTypeId: ''
 };
 
-export class AddNewCreditCard extends UIComponent {
+export class AddNewCreditCard extends React.PureComponent {
 
   static contextTypes = {
     configurations: React.PropTypes.object
@@ -92,49 +89,18 @@ export class AddNewCreditCard extends UIComponent {
     this.validation = new Validation();
   }
 
-  validate(triggerField) {
-    const {
-      ccNumber,
-      ccExpiryYear,
-      ccExpiryMonth,
-      ccCVVandCVC
-    } = this.state;
-
-    this.validation.validate({
-      ccNumber,
-      ccCardTypeId: checkoutCardTypeId(ccNumber, this.props.data.get('cardTypes')),
-      ccCardList: this.props.data.get('totalList'),
-      ccExpiryMonth,
-      ccExpiryYear,
-      ccCVVandCVC
-    }, triggerField);
-
-    this.setState({
-      errors: { ...this.validation.getErrors() }
-    });
-  }
-
-  resetApiErrors() {
-    this.setState({
-      apiErrors: {}
-    });
-  }
-
-  getCardTypeIcon() {
-    const { cardTypeId } = this.state;
-    return <span className={`icon ${typeIcons[`${cardTypeId}`]}`} />;
-  }
-
   onCardNumberChange(e) {
     this.resetApiErrors();
     validateNumber(e);
     const value = e.target.value;
+    const { validation: { cardValidation } } = paymentHelper;
     const cardTypeId = cardValidation(value);
     this.setState({ ccNumber: value, cardTypeId });
   }
 
   onCardNumberBlur(e) {
     const value = e.target.value;
+    const { validation: { cardValidation } } = paymentHelper;
     const cardTypeId = cardValidation(value);
     this.setState({ ccNumber: value, cardTypeId }, () => this.validate('ccNumber'));
   }
@@ -166,6 +132,39 @@ export class AddNewCreditCard extends UIComponent {
     this.setState({ ccSaveForFurture: e.target.checked });
   }
 
+  getCardTypeIcon() {
+    const { cardTypeId } = this.state;
+    return <span className={`icon ${creditCardConsts.icons[`${cardTypeId}`]}`} />;
+  }
+
+  resetApiErrors() {
+    this.setState({
+      apiErrors: {}
+    });
+  }
+
+  validate(triggerField) {
+    const {
+      ccNumber,
+      ccExpiryYear,
+      ccExpiryMonth,
+      ccCVVandCVC
+    } = this.state;
+
+    this.validation.validate({
+      ccNumber,
+      ccCardTypeId: checkoutCardTypeId(ccNumber, this.props.data.get('cardTypes')),
+      ccCardList: this.props.data.get('totalList'),
+      ccExpiryMonth,
+      ccExpiryYear,
+      ccCVVandCVC
+    }, triggerField);
+
+    this.setState({
+      errors: { ...this.validation.getErrors() }
+    });
+  }
+
   submitForm() {
     const { typeName, onPayItemAdded } = this.props;
     const {
@@ -184,18 +183,15 @@ export class AddNewCreditCard extends UIComponent {
         ccSaveForFurture,
         ccCardTypes: this.props.data.get('cardTypes'),
         ccCardTypeItem: getCardTypeItem(ccNumber, this.props.data.get('cardTypes'))
-      }).then(() => {
-        this.setState({
-          ...initialState
-        });
-      }).catch((error) => {
-        if (ErrorObj.isErrorObj(error) && error.type === ErrorTypes.SERVICE) {
-          const { body: { errors = {} } } = error.data.response;
+      }).then(({ errors }) => {
+        if (errors) {
           this.setState({
             apiErrors: { ...this.state.apiErrors, ...errors }
           });
         } else {
-          Promise.reject(error);
+          this.setState({
+            ...initialState
+          });
         }
       });
     }
@@ -365,7 +361,7 @@ export class AddNewCreditCard extends UIComponent {
                           <p>
                             <FormattedMessage {...selfMessages.cvv_cvc_help_text} />
                           </p>
-                          <Img src="images/img-card-tips.png" />
+                          <img alt="CVV/CVC tips" src="/images/img-card-tips.png" />
                         </Popover>
                       </span>
                     </div>

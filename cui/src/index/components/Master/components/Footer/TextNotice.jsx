@@ -1,10 +1,7 @@
 import React from 'react';
+import { encodeHtmlStr } from 'react-base-ui/lib/utils';
 
-import UIComponent from 'shared/components/UIComponent';
-import NetCUILink from 'shared/components/NetCUILink';
-import { encodeHtmlStr } from 'shared/utils/func';
-
-export default class TextNotice extends UIComponent {
+export default class TextNotice extends React.PureComponent {
     // Specifies the default values for props:
   static defaultProps = {
     title: '<<Notice title>>',
@@ -24,8 +21,14 @@ export default class TextNotice extends UIComponent {
     items.forEach((item, index) => {
       domContents.push(
         <dd key={index}>
-          { !item.url ? <span dangerouslySetInnerHTML={{ __html: encodeHtmlStr(item.title) }} />
-: <NetCUILink href={item.url} dangerouslySetInnerHTML={{ __html: encodeHtmlStr(item.title) }} /> }
+          {
+            !item.url ?
+              <span dangerouslySetInnerHTML={{ __html: encodeHtmlStr(item.title) }} /> :
+              <a
+                href={item.url}
+                dangerouslySetInnerHTML={{ __html: encodeHtmlStr(item.title) }}
+              />
+          }
         </dd>
             );
     });

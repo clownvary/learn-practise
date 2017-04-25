@@ -1,10 +1,5 @@
 
-.idea/
-
-!/node_modules/eslint-config-an/*
-!/node_modules/active.css/
-!/node_modules/react-aaui/*
-!/node_modules/react-base-ui/*
+/node_modules/
 /bower_components/
 /dist/
 /build/

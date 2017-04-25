@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link } from 'shared/components/Link';
-import UIComponent from 'shared/components/UIComponent';
 
-export default class Confirmation extends UIComponent {
+export default class Confirmation extends React.PureComponent {
 
   render() {
     return (
@@ -22,4 +21,3 @@ export default class Confirmation extends UIComponent {
     );
   }
 }
-

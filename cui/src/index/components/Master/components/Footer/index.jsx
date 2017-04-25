@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { decodeHtmlStr } from 'shared/utils/func';
+import { decodeHtmlStr } from 'react-base-ui/lib/utils';
 import 'shared/assets/images/poweredbyactive_Reversed.png';
 
 import ActiveLogo from './ActiveLogo';
@@ -55,4 +55,3 @@ export default class Footer extends Component {
     );
   }
 }
-

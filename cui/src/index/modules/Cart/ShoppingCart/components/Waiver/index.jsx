@@ -1,5 +1,4 @@
 import React from 'react';
-import UIComponent from 'shared/components/UIComponent';
 import { FormattedMessage } from 'shared/translation/formatted';
 import Attachments from './Attachments';
 import WaiverFinalAgreement from './WaiverFinalAgreement';
@@ -7,7 +6,7 @@ import selfMessages from './translations';
 
 import './index.less';
 
-export default class Waiver extends UIComponent {
+export default class Waiver extends React.PureComponent {
 
   render() {
     const { waiver, checkout } = this.props;

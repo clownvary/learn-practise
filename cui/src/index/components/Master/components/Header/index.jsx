@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-
-import Img from 'shared/components/Img';
-import NetCUILink from 'shared/components/NetCUILink';
-import { decodeHtmlStr } from 'shared/utils/func';
+import { decodeHtmlStr } from 'react-base-ui/lib/utils';
 
 import 'shared/assets/images/logo.png';
 import './index.less';
@@ -22,7 +19,7 @@ export default class Header extends Component {
       <div className="cui-header-opts">
         { login.map((item, i) => (
           <span key={i}>
-            <NetCUILink href={item.get('url')}>{ item.get('title') }</NetCUILink>
+            <a href={item.get('url')}>{ item.get('title') }</a>
             { i + 1 < login.count() ? ' |' : '' }
           </span>
         )) }
@@ -40,7 +37,7 @@ export default class Header extends Component {
         <b>Welcome, { firstname }</b>
         { logout.map((item, i) => (
           <span key={i}>
-            <NetCUILink href={item.get('url')}>{ item.get('title') }</NetCUILink>
+            <a href={item.get('url')}>{ item.get('title') }</a>
             { i + 1 < logout.count() ? ' |' : '' }
           </span>
             )) }
@@ -62,7 +59,7 @@ export default class Header extends Component {
         <header className="cui-header">
           <div className="cui-header-logo">
             <a href={configurations.get('banner_logo_link')} target="_blank" rel="noopener noreferrer">
-              { logo ? <Img src={logo.get('url')} alt={decodeHtmlStr(logo.get('title'))} title={decodeHtmlStr(logo.get('title'))} /> : null }
+              { logo ? <img src={logo.get('url')} alt={decodeHtmlStr(logo.get('title'))} title={decodeHtmlStr(logo.get('title'))} /> : null }
             </a>
           </div>
           { this.isLogin() ?
@@ -73,4 +70,3 @@ export default class Header extends Component {
     );
   }
 }
-

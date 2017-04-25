@@ -1,5 +1,5 @@
 import { fromJS } from 'immutable';
-import reducerHandler from 'shared/utils/reducerHandler';
+import { reducerHandler } from 'react-base-ui/lib/utils';
 
 import {
   PAYMENT_REGISTER_MODULE,
@@ -154,7 +154,7 @@ export const handlers = {
 
   [PAYMENT_ADD_TEMP_CREDIT_CARD](state, { payload }) {
     return state.withMutations((s) => {
-      s.set('modules', getFilledModulesByType(s.get('modules'), PaymentTypes.CREDIT_CARD, { tempList: fromJS([generateCardId(fromJS(payload))]) }));
+      s.set('modules', getFilledModulesByType(s.get('modules'), PaymentTypes.CREDIT_CARD, { tempList: fromJS([fromJS(payload)]) }));
     });
   }
 };

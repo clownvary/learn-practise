@@ -1,16 +1,15 @@
 import React from 'react';
-import UIComponent from 'shared/components/UIComponent';
 
-import typeIcons from 'shared/consts/creditCard/typeIcons';
 import Radio from 'react-aaui/lib/Radio';
 import { FormattedMessage } from 'shared/translation/formatted';
 import selfMessages from '../translations';
+import creditCardConsts from '../../consts/creditCard';
 
 import './index.less';
 
-const getCardTypeIcon = flage => <span className={`icon ${typeIcons[`${flage}`]}`} />;
+const getCardTypeIcon = flage => <span className={`icon ${creditCardConsts.icons[`${flage}`]}`} />;
 
-export default class SavedCreditCard extends UIComponent {
+export default class SavedCreditCard extends React.PureComponent {
 
   render() {
     const { name, data, typeName, onItemSelectedChange } = this.props;

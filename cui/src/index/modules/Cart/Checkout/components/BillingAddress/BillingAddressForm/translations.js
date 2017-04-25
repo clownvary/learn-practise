@@ -39,7 +39,7 @@ export default defineMessages({
   },
   labelZipCode: {
     id: `${PREFIX}.labelZipCode`,
-    defaultMessage: 'Zip Code'
+    defaultMessage: 'Zip/Post Code'
   },
   buttonAdd: {
     id: `${PREFIX}.buttonAdd`,

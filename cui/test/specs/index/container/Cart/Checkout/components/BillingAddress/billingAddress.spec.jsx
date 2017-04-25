@@ -24,6 +24,7 @@ function setup(_state, _context = context, _config) {
     changeCountryAction: expect.createSpy(),
     changeFormDataAction: expect.createSpy(),
     hideBillingAddressFormAction: expect.createSpy(),
+    getCountryStateAction: expect.createSpy().andCall(() => Promise.resolve()),
     submitAction: expect.createSpy(),
     cancelAction: expect.createSpy()
   };
@@ -45,16 +46,20 @@ function setup(_state, _context = context, _config) {
 
 describe('index/modules/Cart/Checkout/components/BillingAddress', () => {
   it('should render when hideBilling is false', () => {
-    const { container, list, form } = setup(null, null, { hideBilling: false });
+    const { container, list, form, actions } =
+      setup(null, null, { hideBilling: false, isInternational: false });
     expect(container.length).toEqual(1);
     expect(list.length).toEqual(1);
     expect(form.length).toEqual(1);
+    expect(actions.getCountryStateAction).toHaveBeenCalled();
   });
 
   it('should not render when hideBilling is true', () => {
-    const { container, list, form } = setup(null, null, { hideBilling: true });
+    const { container, list, form, actions } =
+      setup(null, null, { hideBilling: true, isInternational: false });
     expect(container.length).toEqual(0);
     expect(list.length).toEqual(0);
     expect(form.length).toEqual(0);
+    expect(actions.getCountryStateAction).toHaveBeenCalled();
   });
 });

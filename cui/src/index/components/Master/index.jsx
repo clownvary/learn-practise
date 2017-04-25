@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { MessageBoard, cleanMessages } from 'react-base-ui/lib/messages';
+import { MessageBoard, clearAll } from 'react-base-ui/lib/messages';
+import { syncLegencyCUISessionAction } from 'index/actions/syncSession';
 import PageHeader from 'shared/components/PageHeader';
-import Breadcrumb from 'shared/components/Breadcrumb';
+import { Breadcrumb } from 'react-base-ui/lib/components';
 import { isCustomizedTheme } from 'shared/styles/themes/customize';
-import Loadingbar from 'shared/components/LoadingBar';
-import { syncLegencyCUISessionAction } from 'shared/actions/syncSession';
 import 'shared/styles/index.less';
 import { Header, Navigation, Footer } from './components/';
 import './index.less';
@@ -16,7 +15,6 @@ export class Master extends Component {
     children: React.PropTypes.node,
     syncLegencyCUISessionAction: React.PropTypes.func,
     theme: React.PropTypes.string,
-    loading: React.PropTypes.shape({}),
     routes: React.PropTypes.shape([]),
     params: React.PropTypes.shape({})
   }
@@ -38,8 +36,8 @@ export class Master extends Component {
   }
 
   render() {
-    const { routes, params, loading, children } = this.props;
-    cleanMessages();
+    const { routes, params, children } = this.props;
+    clearAll();
 
     return (
       <div className={this.getNewSiteClassName()}>
@@ -55,7 +53,6 @@ export class Master extends Component {
           </div>
         </div>
         <Footer />
-        <Loadingbar loading={loading} />
       </div>
     );
   }
@@ -63,7 +60,6 @@ export class Master extends Component {
 
 export default connect(
   state => ({
-    loading: state.loading,
     theme: state.systemSettings.getIn(['customizeStyle', 'current_theme'])
   }), {
     syncLegencyCUISessionAction

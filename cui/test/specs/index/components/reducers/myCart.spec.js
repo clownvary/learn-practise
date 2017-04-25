@@ -1,6 +1,7 @@
 import { is, fromJS } from "immutable";
 import * as actions from "index/components/Master/actions";
 import myCartReducer from "index/components/Master/reducers";
+import { MASTER_UI_SHOPPINGCART_COUNT } from 'index/components/Master/consts/actionTypes';
 
 describe("index/components/reducers/myCart", () => {
 
@@ -9,20 +10,14 @@ describe("index/components/reducers/myCart", () => {
   });
 
   it("Should fetch shopping chart count data successfully", () => {
-    const {FETCH_SHOPPINGCART_COUNT_SUCCESS} = actions;
     const returnState = myCartReducer(undefined, {
-      type: FETCH_SHOPPINGCART_COUNT_SUCCESS,
-      payload: {
-        body: {
-          cart_count: 123
-        }
-      }
+      type: MASTER_UI_SHOPPINGCART_COUNT,
+      payload: 123
     });
     expect(returnState.get("cartCount")).to.equal(123);
   });
 
   it("Should fetch shopping chart count data default", () => {
-    const {FETCH_SHOPPINGCART_COUNT_SUCCESS} = actions;
     const returnState = myCartReducer(undefined, {
       type: "UN_KNOW_HANDLER",
       payload: {}

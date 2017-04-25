@@ -1,18 +1,12 @@
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { routerMiddleware } from 'react-router-redux';
-import middlewares from 'shared/api/middlewares';
+import { presetRedux } from 'react-base-ui/lib/middlewares';
+import syncSessionMiddleware from 'shared/middlewares/syncSessionMiddleware';
 import rootReducer from 'index/reducers';
 
 export default (initialState = {}, history) => {
-  const middlewareList = [...middlewares, routerMiddleware(history)];
-  let middleware = applyMiddleware(...middlewareList);
-
-  if (__DEV__ || __STATIC__) {
-    const devTools = window.devToolsExtension ?
-      window.devToolsExtension() :
-      require('shared/components/DevTools/DevTools').instrument(); // eslint-disable-line global-require
-    middleware = compose(middleware, devTools);
-  }
+  const middlewareList = [...presetRedux, syncSessionMiddleware(), routerMiddleware(history)];
+  const middleware = applyMiddleware(...middlewareList);
 
   const store = middleware(createStore)(rootReducer, initialState);
 

@@ -3,7 +3,7 @@ import find from 'lodash/find';
 import isArray from 'lodash/isArray';
 import mapValues from 'lodash/mapValues';
 import invert from 'lodash/invert';
-import reducerHandler from 'shared/utils/reducerHandler';
+import { reducerHandler } from 'react-base-ui/lib/utils';
 import { billingAddressFormFields as fields, formModes } from '../consts';
 import {
   BILLINGADDRESS_UI_LIST,
@@ -16,7 +16,8 @@ import {
   BILLINGADDRESS_UI_COUNTRYSTATE,
   BILLINGADDRESS_ON_CREATE,
   BILLINGADDRESS_ON_UPDATE,
-  BILLINGADDRESS_UI_COUNTRY_SELECTED
+  BILLINGADDRESS_UI_COUNTRY_SELECTED,
+  BILLINGADDRESS_UI_SET_ISINTERNATIONAL
 } from '../consts/actionTypes';
 
 const initialState = fromJS({
@@ -32,7 +33,9 @@ const initialState = fromJS({
   isFormDisplay: false,
   isFormHeaderDisplay: true,
   isListDisplay: true,
-  formMode: formModes.VIEW
+  isStateShownAsList: false,
+  formMode: formModes.VIEW,
+  isInternational: true
 });
 
 const emptyFormData = {
@@ -46,6 +49,11 @@ const emptyFormData = {
   [fields.STATE]: '',
   [fields.ZIPCODE]: ''
 };
+
+const setStateShown = state =>
+  state.set('isStateShownAsList', state.getIn(['selectedCountry', 'states']) &&
+    state.getIn(['selectedCountry', 'states']).size > 0);
+
 
 const handlers = {
   [BILLINGADDRESS_UI_COUNTRYSTATE](state, { payload: { countries } }) {
@@ -81,16 +89,17 @@ const handlers = {
       });
     }
 
-    return state.withMutations((s) => {
+    return setStateShown(state.withMutations((s) => {
       s.set('formData', fromJS(emptyFormData));
       s.set('selectedCountry', fromJS({}));
       s.set('selectedState', fromJS({}));
+
       s.set('isFormHeaderDisplay', false);
       s.set('isListDisplay', false);
       s.set('isFormDisplay', true);
       s.set('formMode', formModes.CREATE);
       s.set('formErrors', fromJS({}));
-    });
+    }));
   },
 
   [BILLINGADDRESS_UI_SELECTED](state, { payload: { selectedCustomerId } }) {
@@ -101,35 +110,56 @@ const handlers = {
   },
 
   [BILLINGADDRESS_ON_CREATE](state) {
-    return state.withMutations((s) => {
+    return setStateShown(state.withMutations((s) => {
       s.set('formData', fromJS(emptyFormData));
-      s.set('selectedCountry', fromJS({}));
+      s.set('selectedCountry', s.get('isInternational') ? fromJS({}) : s.getIn(['countries', 0]));
       s.set('selectedState', fromJS({}));
       s.set('isFormHeaderDisplay', true);
       s.set('isListDisplay', true);
       s.set('isFormDisplay', true);
       s.set('formMode', formModes.CREATE);
       s.set('formErrors', fromJS({}));
-    });
+    }));
   },
 
   [BILLINGADDRESS_ON_UPDATE](state) {
-    return state.withMutations((s) => {
+    return setStateShown(state.withMutations((s) => {
       const billingAddress = s.get('selectedBillingAddress');
-      s.set('formData', fromJS(mapValues(invert(fields),
-        (value, key) => billingAddress.get(key))));
 
-      const selectedCountry = s.get('countries')
+      let selectedCountry = fromJS({});
+      if (s.get('isInternational')) {
+        selectedCountry = s.get('countries')
         .find(country => country.get('value') === billingAddress.get('country'));
+      } else {
+        selectedCountry = s.getIn(['countries', 0]);
+      }
+
+      let selectedState;
+      if (selectedCountry && selectedCountry.get('states')) {
+        const states = selectedCountry.get('states') || [];
+        selectedState = states.find(sta => sta.get('value') === billingAddress.get('state'));
+      }
+
       s.set('selectedCountry', selectedCountry || fromJS({}));
-      s.set('selectedState', (selectedCountry && selectedCountry.get('states')
-        .find(sta => sta.get('value') === billingAddress.get('state'))) || fromJS({}));
+      s.set('selectedState', selectedState || fromJS({}));
+      s.set('formData', fromJS(
+          mapValues(
+            invert(fields),
+            (value, key) => {
+              const hasStates = selectedCountry &&
+                             selectedCountry.get('states') &&
+                             selectedCountry.get('states').size;
+              return key === fields.STATE && hasStates && !selectedState ? '' : billingAddress.get(key);
+            }
+          )
+        )
+      );
       s.set('isFormHeaderDisplay', false);
       s.set('isListDisplay', false);
       s.set('isFormDisplay', true);
       s.set('formMode', formModes.UPDATE);
       s.set('formErrors', fromJS({}));
-    });
+    }));
   },
 
   [BILLINGADDRESS_UI_FORM_SHOW](state, { payload: { display } }) {
@@ -143,13 +173,13 @@ const handlers = {
   },
 
   [BILLINGADDRESS_UI_FORM_FIELD](state, { payload: { fieldType, value } }) {
-    return state.withMutations((s) => {
+    return setStateShown(state.withMutations((s) => {
       s.set('formData', s.get('formData').set(fieldType, value));
-    });
+    }));
   },
 
   [BILLINGADDRESS_UI_COUNTRY_SELECTED](state, { payload: { countryId } }) {
-    return state.withMutations((s) => {
+    return setStateShown(state.withMutations((s) => {
       if (s.getIn(['selectedCountry', 'value']) !== countryId) {
         s.set('selectedCountry', s.get('countries')
           .find(country => country.get('value') === countryId) || fromJS({}));
@@ -160,7 +190,7 @@ const handlers = {
 
         s.set('selectedState', fromJS({}));
       }
-    });
+    }));
   },
 
   [BILLINGADDRESS_UI_FORM_VALIDATION](state, { payload: { formErrors } }) {
@@ -178,6 +208,12 @@ const handlers = {
       s.set('isFormDisplay', false);
       s.set('formData', fromJS({}));
       s.set('formMode', formModes.VIEW);
+    });
+  },
+
+  [BILLINGADDRESS_UI_SET_ISINTERNATIONAL](state, { payload: { isInternational } }) {
+    return state.withMutations((s) => {
+      s.set('isInternational', isInternational);
     });
   }
 };

@@ -1,7 +1,6 @@
 import React from 'react';
-import UIComponent from 'shared/components/UIComponent';
 import { connect } from 'react-redux';
-import { decodeHtmlStr } from 'shared/utils/func';
+import { decodeHtmlStr } from 'react-base-ui/lib/utils';
 import orderSummaryMessages from 'shared/translation/messages/Cart/orderSummary';
 import { FormattedMessage } from 'shared/translation/formatted';
 import Checkbox from 'react-aaui/lib/Checkbox';
@@ -10,11 +9,11 @@ import WarningAlert from 'react-aaui/lib/Alert';
 import { confirm } from 'react-base-ui/lib/confirmation';
 import CheckScrollModal from './CheckScrollModal';
 import { hideWarningAlertAction, changeAgreementEntryAction } from '../../actions/waiver';
-import { validateAgreement } from '../../utils';
+import * as waiverTypes from '../../consts/waiverTypes';
 
 import selfMessages from './translations';
 
-export class WaiverFinalAgreement extends UIComponent {
+export class WaiverFinalAgreement extends React.PureComponent {
 
   static contextTypes = {
     configurations: React.PropTypes.object
@@ -27,21 +26,27 @@ export class WaiverFinalAgreement extends UIComponent {
     };
   }
 
+  isInvalidEntry(id) {
+    const {
+      waiversAgreements, checkout
+    } = this.props;
+    const { needValidate } = checkout.toJS();
+    const agreement = waiversAgreements[id];
+    return needValidate && agreement && agreement.error;
+  }
+
   generateSystemWaiver() {
     const { checkScrollModalShown } = this.state;
     const {
       waivers,
       waiversAgreements,
-      warningAlertShown,
-      checkout
+      warningAlertShown
     } = this.props;
 
     const {
       waiver_text: waiverText,
       waiver_text_donation: waiverTextDonation
     } = waivers;
-
-    const { needValidate } = checkout.toJS();
 
     return (
     waiverText || waiverTextDonation ?
@@ -51,10 +56,10 @@ export class WaiverFinalAgreement extends UIComponent {
             <Checkbox
               onChange={(e) => {
                 this.props.changeAgreementEntryAction({
-                  id: 'final_system_waiver',
+                  id: waiverTypes.FINAL_SYSTEM_WAIVER,
                   value: e.target.checked
                 });
-              }} disabled={warningAlertShown} checked={waiversAgreements.final_system_waiver.value} size="m" defaultChecked={false} value="agree"
+              }} disabled={warningAlertShown} checked={waiversAgreements[waiverTypes.FINAL_SYSTEM_WAIVER].value} size="m" defaultChecked={false} value="agree"
             />
           </div>
           <div className="attachment-content">
@@ -73,8 +78,10 @@ export class WaiverFinalAgreement extends UIComponent {
             </b>
           </div>
         </div>
-        { (needValidate && !validateAgreement(waiversAgreements.final_system_waiver)) ?
-          <span style={{ color: 'red' }}><FormattedMessage {...orderSummaryMessages.required} /></span> : null }
+        {
+          this.isInvalidEntry(waiverTypes.FINAL_SYSTEM_WAIVER) ?
+            <span style={{ color: 'red' }}><FormattedMessage {...orderSummaryMessages.required} /></span> : null
+        }
         { warningAlertShown ?
           <WarningAlert type="warning" noClose>
             <FormattedMessage {...selfMessages.warning_text} />
@@ -92,26 +99,24 @@ export class WaiverFinalAgreement extends UIComponent {
   }
 
   generateInitialsWaiver() {
-    const { waivers, waiversAgreements, checkout } = this.props;
+    const { waivers, waiversAgreements } = this.props;
     const {
       waiver_initials_online_text: waiverInitialsOnlineText
     } = waivers;
-    const { needValidate } = checkout.toJS();
+
     return (
     waiverInitialsOnlineText ?
       <div>
         <div className="final-agreement attachment">
           <div className="attachment-form-item form-item-required">
             <Input
-              errored={
-                needValidate ? (!validateAgreement(waiversAgreements.final_initials_waiver)) : false
-              }
-              type="text" maxLength="4" size="m" onChange={(e) => {
+              errored={this.isInvalidEntry(waiverTypes.FINAL_INITIALS_WAIVER)}
+              type="text" maxLength="4" size="m" onBlur={(e) => {
                 this.props.changeAgreementEntryAction({
-                  id: 'final_initials_waiver',
+                  id: waiverTypes.FINAL_INITIALS_WAIVER,
                   value: e.target.value
                 });
-              }} value={waiversAgreements.final_initials_waiver.value} placeholder="Initials"
+              }} value={waiversAgreements[waiverTypes.FINAL_INITIALS_WAIVER].value} placeholder="Initials"
             />
           </div>
           <div className="attachment-content">
@@ -138,8 +143,10 @@ export class WaiverFinalAgreement extends UIComponent {
             </b>
           </div>
         </div>
-        { (needValidate && !validateAgreement(waiversAgreements.final_initials_waiver)) ?
-          <span style={{ color: 'red' }}><FormattedMessage {...orderSummaryMessages.required} /></span> : null }
+        {
+          this.isInvalidEntry(waiverTypes.FINAL_INITIALS_WAIVER) ?
+            <span style={{ color: 'red' }}><FormattedMessage {...orderSummaryMessages.required} /></span> : null
+         }
       </div> : null
     );
   }

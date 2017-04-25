@@ -1,8 +1,8 @@
 import { createFSA } from 'react-base-ui/lib/utils';
-import { confirm } from 'react-base-ui/lib/confirmation';
+import { ErrorObj } from 'react-base-ui/lib/errors';
 import mapValues from 'lodash/mapValues';
 import invert from 'lodash/invert';
-import stringHelper from 'shared/utils/stringHelper';
+import { string as stringHelper } from 'react-base-ui/lib/helper';
 import API from '../api';
 import { billingAddressFormFields as fields, formModes } from '../consts';
 import {
@@ -16,7 +16,8 @@ import {
   BILLINGADDRESS_UI_COUNTRYSTATE,
   BILLINGADDRESS_UI_COUNTRY_SELECTED,
   BILLINGADDRESS_ON_CREATE,
-  BILLINGADDRESS_ON_UPDATE
+  BILLINGADDRESS_ON_UPDATE,
+  BILLINGADDRESS_UI_SET_ISINTERNATIONAL
 } from '../consts/actionTypes';
 
 
@@ -38,6 +39,7 @@ const uiFormFieldValidationAction = createFSA(
 const onCreateBillingAddressActionRaw = createFSA(BILLINGADDRESS_ON_CREATE);
 const onUpdateBillingAddressActionRaw = createFSA(BILLINGADDRESS_ON_UPDATE);
 
+export const uiSetIsInternationalAction = createFSA(BILLINGADDRESS_UI_SET_ISINTERNATIONAL);
 
 const validateField = (fieldType, value, formMode = formModes.VIEW) => {
   switch (formMode) {
@@ -54,6 +56,7 @@ const validateField = (fieldType, value, formMode = formModes.VIEW) => {
             return 'errorMessageRequired';
           }
           break;
+        case fields.ZIPCODE_SERVICE:
         case fields.CUSTOMERID:
         case fields.ADDRESS2:
         case fields.MAILINGNAME:
@@ -73,6 +76,7 @@ const validateField = (fieldType, value, formMode = formModes.VIEW) => {
             return 'errorMessageRequired';
           }
           break;
+        case fields.ZIPCODE_SERVICE:
         case fields.FIRST:
         case fields.LAST:
         case fields.CUSTOMERID:
@@ -88,29 +92,32 @@ const validateField = (fieldType, value, formMode = formModes.VIEW) => {
   return '';
 };
 
-const validateForm = (formData, formMode) => {
-  const err = mapValues(invert(fields),
+const validateForm = (formData, formMode, configurations) => {
+  const _fields = { ...fields };
+  if (!configurations.get('international_addr')) {
+    delete _fields.COUNTRY;
+  }
+  const err = mapValues(invert(_fields),
     (value, key) => validateField(key, formData[key], formMode));
-
-  err.isValidated = !Object.keys(fields)
-    .some(field => !stringHelper.isNullOrEmpty(err[fields[field]]));
+  err.isValidated = !Object.keys(_fields)
+    .some(field => !stringHelper.isNullOrEmpty(err[_fields[field]]));
 
   return err;
 };
 
 const createBillingAddress = data => API.createBillingAddress({ body: data });
 const updateBillingAddress = data => API.updateBillingAddress({ body: data });
-const changePayer = newPayerId => API.changePayer({ body: { payerid: newPayerId } });
+const changePayer = newPayerId => API.changePayer({ body: { payer_id: newPayerId } });
 
-export const getCountryStateAction = () => dispatch =>
-  API.getCountryState().then((response) => {
-    const { body: { countries } } = response;
+export const getCountryStateAction = internationalAddr => dispatch =>
+  API.getCountryState({ isDefault: !internationalAddr })
+  .then(({ body: { countries } }) => {
     dispatch(uiCountryStateAction({ countries }));
   });
 
 export const getBillingAddressAction = () => dispatch =>
-  API.getBillingAddress().then((response) => {
-    const { body: { billing_infos: billingInfos } } = response;
+  API.getBillingAddress()
+  .then(({ body: { billing_infos: billingInfos } }) => {
     dispatch(uiBillingAddressListAction({ billingInfos }));
   });
 
@@ -151,7 +158,8 @@ export const submitAction = () => (dispatch, getState) => {
   const formData = state.get('formData').toJS();
   const formMode = state.get('formMode');
 
-  const errors = validateForm(formData, formMode);
+  const configurations = getState().configurations;
+  const errors = validateForm(formData, formMode, configurations);
 
   dispatch(uiFormValidationAction({ formErrors: errors }));
 
@@ -160,14 +168,21 @@ export const submitAction = () => (dispatch, getState) => {
       updateBillingAddress(formData) :
       createBillingAddress(formData);
 
-    return result.then(({ body: { error_message: errMsg } }) => {
-      if (stringHelper.isNullOrEmpty(errMsg)) {
-        return dispatch(getBillingAddressAction())
-          .then(() => dispatch(uiCancelAction()));
+    return result.then(() =>
+      dispatch(getBillingAddressAction()).then(() => dispatch(uiCancelAction()))
+    ).catch((error) => {
+      if (ErrorObj.isErrorObj(error)) {
+        const { data: { response: { isValidationError, body } } } = error;
+        if (isValidationError) {
+          const { errors: { zip_code: zipCodeMsg } } = body || {};
+          return dispatch(uiFormValidationAction({
+            formErrors: {
+              [fields.ZIPCODE_SERVICE]: zipCodeMsg
+            }
+          }));
+        }
       }
-
-      confirm(errMsg, { title: 'Error' });
-      return Promise.reject(errMsg);
+      return Promise.reject(error);
     });
   }
 

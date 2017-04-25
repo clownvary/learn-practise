@@ -201,7 +201,10 @@ describe('index/modules/Cart/Checkout/actions/billingAddress', () => {
             })
           }
         }
-      }
+      },
+      configurations: fromJS({
+        international_addr: false
+      })
     });
 
     store.dispatch(submitAction());
@@ -231,7 +234,10 @@ describe('index/modules/Cart/Checkout/actions/billingAddress', () => {
             })
           }
         }
-      }
+      },
+      configurations: fromJS({
+        international_addr: false
+      })
     });
 
     store.dispatch(submitAction()).then(() => {
@@ -265,7 +271,10 @@ describe('index/modules/Cart/Checkout/actions/billingAddress', () => {
             })
           }
         }
-      }
+      },
+      configurations: fromJS({
+        international_addr: false
+      })
     });
 
 

@@ -1,11 +1,10 @@
 import React from 'react';
-import UIComponent from 'shared/components/UIComponent';
 import { FormattedMessage, FormattedNumber } from 'shared/translation/formatted';
 import orderSummaryMessages from 'shared/translation/messages/Cart/orderSummary';
 
 import './commonordersummary.less';
 
-export default class OrderSummary extends UIComponent {
+export default class OrderSummary extends React.PureComponent {
 
   static contextTypes = {
     getWording: React.PropTypes.func

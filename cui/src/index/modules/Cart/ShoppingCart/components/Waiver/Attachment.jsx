@@ -1,21 +1,36 @@
 import React from 'react';
-import UIComponent from 'shared/components/UIComponent';
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 import { FormattedMessage, FormattedDyncMessage } from 'shared/translation/formatted';
 import orderSummaryMessages from 'shared/translation/messages/Cart/orderSummary';
-import { decodeHtmlStr } from 'shared/utils/func';
+import { decodeHtmlStr } from 'react-base-ui/lib/utils';
 import classNames from 'classnames';
 import Input from 'react-aaui/lib/Input';
 import Checkbox from 'react-aaui/lib/Checkbox';
 import { confirm } from 'react-base-ui/lib/confirmation';
 import { changeAgreementEntryAction } from '../../actions/waiver';
-import { validateAgreement } from '../../utils';
+
 
 import selfMessages, { PREFIX } from './translations';
 
 
-export class Attachment extends UIComponent {
+export class Attachment extends React.PureComponent {
+
+  isInvalidEntry() {
+    const {
+      itemData: { id },
+      waiversAgreements, checkout
+    } = this.props;
+    const { needValidate } = checkout.toJS();
+    const agreement = waiversAgreements[id];
+    return needValidate && agreement && agreement.error;
+  }
+  capitalize = (str) => {
+    if (str.length > 0) {
+      return str.replace(/[a-zA-Z]/, x => x.toUpperCase());
+    }
+    return str;
+  }
 
   render() {
     const {
@@ -27,8 +42,7 @@ export class Attachment extends UIComponent {
         require_initials_online: requireInitialsOnline,
         required_before_completing_transaction: requiredBeforeCompletingTransaction
       },
-      intl: { messages }, waiversAgreements, checkout } = this.props;
-    const { needValidate } = checkout.toJS();
+      intl: { messages }, waiversAgreements } = this.props;
 
     return (
       <div>
@@ -43,7 +57,7 @@ export class Attachment extends UIComponent {
           >
             { requireInitialsOnline ?
               <Input
-                errored={needValidate ? (!validateAgreement(waiversAgreements[id])) : false} type="text" maxLength="4" size="m" onChange={(e) => {
+                errored={this.isInvalidEntry()} type="text" maxLength="4" size="m" onBlur={(e) => {
                   this.props.changeAgreementEntryAction({
                     id,
                     value: e.target.value
@@ -68,8 +82,10 @@ export class Attachment extends UIComponent {
                   href="#hash" onClick={(e) => {
                     confirm(
                       (
-                        <div className="attachment-alert-message">
-                          <h3><FormattedDyncMessage value={stage.description} /></h3>
+                        <div className="waiver-attachment-alert-message">
+                          <h3>
+                            <FormattedDyncMessage value={this.capitalize(stage.description)} />
+                          </h3>
                           <div className="atch-msg-content" dangerouslySetInnerHTML={{ __html: decodeHtmlStr(stage.item_text) }} />
                         </div>
                       ),
@@ -97,8 +113,9 @@ export class Attachment extends UIComponent {
             </b>
           </div>
         </div>
-        { (needValidate && !validateAgreement(waiversAgreements[id])) ?
-          <span style={{ color: 'red' }}><FormattedMessage {...orderSummaryMessages.required} /></span> : null }
+        {
+          this.isInvalidEntry() ? <span style={{ color: 'red' }}><FormattedMessage {...orderSummaryMessages.required} /></span> : null
+        }
       </div>
     );
   }

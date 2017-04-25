@@ -25,5 +25,9 @@ export default defineMessages({
   donate: {
     id: `${PREFIX}.donate`,
     defaultMessage: "Donate"
+  },
+  ok: {
+    id: `${PREFIX}.ok`,
+    defaultMessage: "OK"
   }
 });

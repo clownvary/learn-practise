@@ -1,5 +1,4 @@
 import React from 'react';
-import UIComponent from 'shared/components/UIComponent';
 import { connect } from 'react-redux';
 import { confirm } from 'react-base-ui/lib/confirmation';
 import Transaction from './Transaction';
@@ -7,7 +6,7 @@ import { deleteTransactionClusterAction } from '../../actions/transactions';
 
 import './transactions.less';
 
-export class Transactions extends UIComponent {
+export class Transactions extends React.PureComponent {
 
   confirmDelete(id) {
     if (id) {

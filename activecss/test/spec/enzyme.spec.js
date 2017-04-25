@@ -23,6 +23,9 @@ describe('(Container) Root', () => {
     it('contains a header explaining the app', () => {
         expect(wrapper.find('.welcome-header')).to.have.length(1);
     });
+     it('class name', () => {
+        expect(wrapper.find('div h1').prop('className')).to.include('welcome');
+    });
 });
 // describe('Header', () => {
 //     const context = { color: 'foo' };

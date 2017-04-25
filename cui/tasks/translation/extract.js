@@ -31,6 +31,6 @@ gulp.task('intl-extract', () => {
     const messagesString = JSON.stringify(messagesObject, null, 2)
                               .replace(/\n {2}\}/g, ',\n  }')
                               .replace(/\}\n\]/g, '},\n]');
-    fs.writeFileSync('translations/source/en.js', `/* eslint-disable */\nexport default ${messagesString}`);
+    fs.writeFileSync('i18n/source/en.js', `/* eslint-disable */\nexport default ${messagesString}`);
   });
 });

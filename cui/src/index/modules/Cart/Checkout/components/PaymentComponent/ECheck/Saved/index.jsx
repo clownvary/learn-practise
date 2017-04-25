@@ -1,11 +1,10 @@
 import React from 'react';
-import UIComponent from 'shared/components/UIComponent';
 
 import Radio from 'react-aaui/lib/Radio';
 
 import './index.less';
 
-export default class SavedECheck extends UIComponent {
+export default class SavedECheck extends React.PureComponent {
   render() {
     const { name, data, typeName, onItemSelectedChange } = this.props;
 

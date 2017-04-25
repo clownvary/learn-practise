@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import UIComponent from 'shared/components/UIComponent';
 import CommonOrderSummary from 'index/modules/Cart/shared/CommonOrderSummary';
 import { fetchOrderSummary } from '../../actions/orderSummary';
 
@@ -10,7 +9,7 @@ import ApplyGiftCard from '../ApplyGiftCard';
 
 import './index.less';
 
-export class OrderSummary extends UIComponent {
+export class OrderSummary extends React.PureComponent {
   componentDidMount() {
     this.props.fetchOrderSummary();
   }

@@ -4,6 +4,7 @@ import middlewares from 'utils/middlewares';
 import {
   hideWarningAlertAction,
   fetchWaiversAction,
+  uiChangeAgreementEntryAction,
   changeAgreementEntryAction
 } from 'index/modules/Cart/ShoppingCart/actions/waiver';
 import {
@@ -49,7 +50,7 @@ describe('index/modules/Cart/ShoppingCart/actions/waiver', () => {
     });
   });
 
-  describe('Dispatch Action(UI): changeAgreementEntryAction', () => {
+  describe('Dispatch Action(UI): uiChangeAgreementEntryAction', () => {
     it('Should return expected Action Object.', () => {
       const expectedAction = {
         type: WAIVERS_UI_AGREEMENT,
@@ -58,10 +59,19 @@ describe('index/modules/Cart/ShoppingCart/actions/waiver', () => {
           value: 'abc'
         }
       };
-      expect(changeAgreementEntryAction({
+      expect(uiChangeAgreementEntryAction({
         id: 1,
         value: 'abc'
       })).to.deep.equal(expectedAction);
+    });
+  });
+
+  describe('Dispatch Action: changeAgreementEntryAction', () => {
+    it('Should return WAIVERS_UI_AGREEMENT.', (done) => {
+      store.dispatch(changeAgreementEntryAction()).then(() => {
+        expect(store.getActions()[0].type).to.equal(WAIVERS_UI_AGREEMENT);
+        done();
+      });
     });
   });
 

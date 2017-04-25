@@ -1,6 +1,6 @@
 {
   "headers": {
-    "response_code": "0000",
+    "response_code": "9008",
     "response_message": "Succeesul",
     "page_info": {
       "order_by": "",
@@ -12,6 +12,8 @@
     }
   },
   "body": {
-    "error_message": "Invalid billing address."
+    "errors": {
+      "zip_code": "Invalid postal code"
+    }
   }
 }

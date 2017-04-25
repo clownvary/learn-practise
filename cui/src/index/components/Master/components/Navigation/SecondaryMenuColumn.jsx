@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import NetCUILink from 'shared/components/NetCUILink';
 import { FormattedDyncMessage } from 'shared/translation/formatted';
 
 
@@ -19,9 +18,9 @@ export default class SecondaryMenuColumn extends Component {
           {
             items.map((item, i) => (
               <li key={i}>
-                <NetCUILink href={item.get('url')}>
+                <a href={item.get('url')}>
                   <FormattedDyncMessage value={item.get('title')} />
-                </NetCUILink>
+                </a>
               </li>
               ))
           }

@@ -1,6 +1,6 @@
 {
   "headers": {
-    "response_code": "0000",
+    "response_code": "9008",
     "response_message": "We&#39;re sorry but you do not meet our minimum age requirement of 13 to purchase items online. ",
     "page_info": {
       "order_by": "",
@@ -12,7 +12,8 @@
     }
   },
   "body": {
-    "success": false,
-    "errorMessage": "error msg"
+    "errors": {
+      
+    }
   }
 }

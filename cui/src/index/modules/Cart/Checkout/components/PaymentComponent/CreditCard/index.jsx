@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import UIComponent from 'shared/components/UIComponent';
 
 import { FormattedMessage } from 'shared/translation/formatted';
 import selfMessages from './translations';
@@ -16,18 +15,18 @@ export {
 
 export const name = 'CreditCard';
 
-export default class CreditCard extends UIComponent {
+export default class CreditCard extends React.PureComponent {
 
   static propTypes = {
     typeName: PropTypes.string.isRequired
   }
 
   render() {
-    const { data } = this.props;
+    const { data, typeName } = this.props;
 
     return (
       <div>
-        <Saved {...this.props} />
+        <Saved {...this.props} typeName={typeName} />
         <div className="merchant-name layout-width-limited">
           {
             data.get('merchantName') ?
@@ -39,7 +38,7 @@ export default class CreditCard extends UIComponent {
               /> : <FormattedMessage {...selfMessages.no_merchant_name} />
           }
         </div>
-        <New {...this.props} />
+        <New {...this.props} typeName={typeName} />
       </div>
     );
   }

@@ -1,10 +1,9 @@
 import React from 'react';
-import UIComponent from 'shared/components/UIComponent';
 import Attachment from './Attachment';
 
 import './attachments.less';
 
-export default class Attachments extends UIComponent {
+export default class Attachments extends React.PureComponent {
 
   render() {
     const { attachments, waiversAgreements, checkout } = this.props;

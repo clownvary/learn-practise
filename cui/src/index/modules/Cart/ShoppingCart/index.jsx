@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import UIComponent from 'shared/components/UIComponent';
 import PageFooter from 'shared/components/PageFooter';
 import NoTransactions from './components/NoTransactions';
 import OrderSummary from './components/OrderSummary';
@@ -14,11 +13,25 @@ import { fetchWaiversAction } from './actions/waiver';
 
 import './index.less';
 
-export class ShoppingCart extends UIComponent {
+export class ShoppingCart extends React.PureComponent {
 
   static contextTypes = {
     getWording: React.PropTypes.func,
     configurations: React.PropTypes.object
+  }
+
+  static renderTransactions(transactions, quickdonation, waiver, checkout) {
+    return transactions.get('participants').size ?
+      <div className="aaui-flexbox afx-xl-mg-30">
+        <div className="afx-col afx-xl-4-12 afx-sm-1-1 afx-xs-1-1 afx-md-order-1">
+          <OrderSummary transactions={transactions} />
+          <QuickDonation quickdonation={quickdonation} />
+        </div>
+        <div className="afx-col afx-xl-8-12 afx-sm-1-1 afx-xs-1-1">
+          <Transactions transactions={transactions} />
+          <Waiver waiver={waiver} checkout={checkout} />
+        </div>
+      </div> : <NoTransactions />;
   }
 
   componentDidMount() {
@@ -39,20 +52,6 @@ export class ShoppingCart extends UIComponent {
         </div>
       </div>
     );
-  }
-
-  static renderTransactions(transactions, quickdonation, waiver, checkout) {
-    return transactions.get('participants').size ?
-      <div className="aaui-flexbox afx-xl-mg-30">
-        <div className="afx-col afx-xl-4-12 afx-sm-1-1 afx-xs-1-1 afx-md-order-1">
-          <OrderSummary transactions={transactions} />
-          <QuickDonation quickdonation={quickdonation} />
-        </div>
-        <div className="afx-col afx-xl-8-12 afx-sm-1-1 afx-xs-1-1">
-          <Transactions transactions={transactions} />
-          <Waiver waiver={waiver} checkout={checkout} />
-        </div>
-      </div> : <NoTransactions />;
   }
 }
 

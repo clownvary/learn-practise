@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import UIComponent from 'shared/components/UIComponent';
 
 import Saved from './Saved';
 import New from './New';
@@ -11,17 +10,18 @@ export {
 
 export const name = 'ECheck';
 
-export default class ECheck extends UIComponent {
+export default class ECheck extends React.PureComponent {
 
   static propTypes = {
     typeName: PropTypes.string.isRequired
   }
 
   render() {
+    const { typeName } = this.props;
     return (
       <div className="">
-        <Saved {...this.props} />
-        <New />
+        <Saved {...this.props} typeName={typeName} />
+        <New typeName={typeName} />
       </div>
     );
   }

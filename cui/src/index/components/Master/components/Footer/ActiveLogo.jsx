@@ -1,8 +1,7 @@
 import React from 'react';
 import { injectIntl } from 'react-intl';
-import UIComponent from 'shared/components/UIComponent';
 
-export class ActiveLogo extends UIComponent {
+export class ActiveLogo extends React.PureComponent {
 
   render() {
     const { showLogo, intl: { messages } } = this.props;

@@ -14,7 +14,7 @@ node {
     }
 
     stage ('Install Package') {
-      sh 'npm install --no-spin && npm update react-base-ui, eslint-config-an'
+      sh 'npm install --no-spin && npm update react-base-ui && npm update eslint-config-an'
     }
 
     stage ('Build Prod') {
@@ -42,7 +42,7 @@ node {
 
     stage ('Test') {
       try {
-        //sh "npm test -- --port=${port}"
+        sh "npm test -- --port=${port}"
       } catch(Exception e) {
         // possibly send email here, if master branch
         error 'Testing failed'

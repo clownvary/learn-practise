@@ -41,11 +41,6 @@ class AppRoot extends Component {
     const { intl, children } = this.props;
     const { currentLocale, defaultLocale, messages } = intl.toJS();
 
-    let DevTools;
-    if (__DEV__ || __STATIC__) {
-      DevTools = require('shared/components/DevTools/DevTools'); // eslint-disable-line global-require
-    }
-
     return (
       <IntlProvider
         defaultLocale={defaultLocale}
@@ -57,7 +52,6 @@ class AppRoot extends Component {
           <div style={{ height: '100%' }}>
             { children }
           </div>
-          { DevTools ? <DevTools /> : '' }
         </div>
       </IntlProvider>
     );

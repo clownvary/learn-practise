@@ -1,9 +1,8 @@
 import React from 'react';
-import UIComponent from 'shared/components/UIComponent';
 
 import './index.less';
 
-export default class ECheckTab extends UIComponent {
+export default class ECheckTab extends React.PureComponent {
 
   render() {
     return (

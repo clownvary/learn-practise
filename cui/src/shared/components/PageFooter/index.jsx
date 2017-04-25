@@ -1,12 +1,10 @@
 import React from 'react';
 import classNames from 'classnames';
-import UIComponent from 'shared/components/UIComponent';
-import {encodeHtmlStr} from 'shared/utils/func';
 import { FormattedHtmlMessage } from 'shared/translation/formatted';
 
 import './index.less';
 
-export default class PageFooter extends UIComponent {
+export default class PageFooter extends React.PureComponent {
 
   static defaultProps = {
     classes: 'page-footer'

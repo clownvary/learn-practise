@@ -10,7 +10,7 @@ import {
   spyLifecycle
 } from 'enzyme';
 
-describe.only('(Component) CommentList', () => {
+describe('(Component) CommentList', () => {
 
   // using special describeWithDOM helper that enzyme
   // provides so if other devs on my team don't have JSDom set up

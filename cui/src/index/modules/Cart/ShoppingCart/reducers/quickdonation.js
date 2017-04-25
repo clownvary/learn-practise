@@ -1,6 +1,5 @@
 import { fromJS } from 'immutable';
-import { decodeHtmlStr } from 'shared/utils/func';
-import reducerHandler from 'shared/utils/reducerHandler';
+import { decodeHtmlStr, reducerHandler } from 'react-base-ui/lib/utils';
 
 import {
   DONATIONS_UI_AMOUNT,

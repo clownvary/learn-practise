@@ -18,7 +18,7 @@ function setupNewUser(info, callback) {
         callback(err);
     }
 }
-describe.only('sinon func test', () => {
+describe('sinon func test', () => {
     it('should call save once', function () {
         var save = sinon.spy(Database, 'save');
         setupNewUser({ name: 'test' }, function () { });

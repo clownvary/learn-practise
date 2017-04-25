@@ -1,6 +1,5 @@
 import React from 'react';
 import radium from 'radium';
-import NetCUILink from 'shared/components/NetCUILink';
 import { FormattedDyncMessage } from 'shared/translation/formatted';
 import SecondaryMenu from './SecondaryMenu';
 import BaseItem from './BaseItem';
@@ -25,9 +24,9 @@ export class ActivitiesItem extends BaseItem {
 
     return (
       <li style={itemStyles.navItem} className="Nav-activities-item Nav-has-secondary-menu">
-        <NetCUILink href={item.get('url')}>
+        <a href={item.get('url')}>
           <FormattedDyncMessage value={wording || item.get('title')} />
-        </NetCUILink>
+        </a>
         <SecondaryMenu items={item.get('children')} row={6} column={4} />
       </li>
     );

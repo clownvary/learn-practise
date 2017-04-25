@@ -1,13 +1,12 @@
 import React from 'react';
 import classnames from 'classnames';
-import UIComponent from 'shared/components/UIComponent';
 
 import * as CreditCard from '../CreditCard/';
 import * as ECheck from '../ECheck/';
 
 import './index.less';
 
-export default class PaymentMethods extends UIComponent {
+export default class PaymentMethods extends React.PureComponent {
   render() {
     const { data, selectedType, onTypeChange } = this.props;
 

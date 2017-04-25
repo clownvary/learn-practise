@@ -1,6 +1,5 @@
 import React from 'react';
 import radium from 'radium';
-import NetCUILink from 'shared/components/NetCUILink';
 import { FormattedDyncMessage } from 'shared/translation/formatted';
 import BaseItem from './BaseItem';
 
@@ -13,9 +12,9 @@ export class HomeItem extends BaseItem {
 
     return (
       <li style={itemStyles.navItem}>
-        <NetCUILink href={item.get('url')}>
+        <a href={item.get('url')}>
           <FormattedDyncMessage value={wording || item.get('title')} />
-        </NetCUILink>
+        </a>
       </li>
     );
   }

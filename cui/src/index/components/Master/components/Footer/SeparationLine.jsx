@@ -1,13 +1,12 @@
 import React from 'react';
 import radium from 'radium';
-import UIComponent from 'shared/components/UIComponent';
 
 import { getFooterLineStyles } from 'shared/styles/themes/customize';
 
 /**
  * The color of this line needs to follow the five themes.
  */
-export class SeparationLine extends UIComponent {
+export class SeparationLine extends React.PureComponent {
 
   static contextTypes = {
     systemSettings: React.PropTypes.object

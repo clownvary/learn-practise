@@ -1,13 +1,14 @@
 import Promise from 'bluebird';
-import { showError, cleanMessages } from 'react-base-ui/lib/messages';
+import { showError, clearError } from 'react-base-ui/lib/messages';
 import { createFSA } from 'react-base-ui/lib/utils';
 import { reportError } from 'react-base-ui/lib/actions';
 import { ErrorObj, ErrorTypeEnum } from 'react-base-ui/lib/errors';
 import { routerActions } from 'react-router-redux';
 import { commonPageRenderActions } from 'index/components/Master/actions';
-import { syncLegencyCUISessionAction } from 'shared/actions/syncSession';
+import { syncLegencyCUISessionAction } from 'index/actions/syncSession';
 import orderSummaryMessages from 'shared/translation/messages/Cart/orderSummary';
 import API from '../api';
+import { uiValidateAgreementAction } from './waiver';
 import {
   CHECKOUT_UI_NEEDPAY,
   CHECKOUT_UI_VALIDATION
@@ -33,32 +34,6 @@ function checkFinalWaiver(finalWaiver) {
     isPass = false;
   }
   return isPass;
-}
-
-export function validateCheckoutState(waiver) {
-  const { waivers, waiversAgreements } = waiver.toJS();
-  if (!waivers) return true;
-  if (!waiversAgreements) return false;
-
-  const { final_initials_waiver, final_system_waiver } = waiversAgreements;
-
-  // check waiver items
-  let itemWaiverFlag = true;
-  if (waivers && waivers.attachments) {
-    waivers.attachments.forEach((item) => {
-      const agreement = waiversAgreements[item.id];
-
-      if (agreement.required && !(agreement.value)) {
-        itemWaiverFlag = false;
-      }
-    });
-  }
-
-  // check final waiver
-  const finalWaiverFlag = checkFinalWaiver(final_initials_waiver)
-    && checkFinalWaiver(final_system_waiver);
-  const canCheckout = itemWaiverFlag && finalWaiverFlag;
-  return canCheckout;
 }
 
 export const checkoutShoppingCartAction = () => (dispatch, getState) => {
@@ -103,16 +78,52 @@ export const checkoutShoppingCartAction = () => (dispatch, getState) => {
   });
 };
 
-export function validateAndCheckoutShoppingCartAction(waiver) {
-  const isPass = validateCheckoutState(waiver);
-  return (dispatch) => {
-    dispatch(uiValidationAction({ isPass }));
-    if (isPass) {
-      cleanMessages();
+export const uiShowWaiverErrors = () => {
+  const errorMsg = orderSummaryMessages.waiverError.defaultMessage;
+  showError(errorMsg, { appendMode: true });
+};
+
+export const uiClearWaiverErrors = () => {
+  const errorMsg = orderSummaryMessages.waiverError.defaultMessage;
+  clearError([errorMsg]);
+};
+
+export const validateWaiversAction = () => (dispatch, getState) => {
+  const { waivers, waiversAgreements } = getState().modules.Cart.ShoppingCart.waiver.toJS();
+  let canCheckout = !waivers;
+  if (!canCheckout && waiversAgreements) {
+    const { final_initials_waiver, final_system_waiver } = waiversAgreements;
+    // check waiver items
+    let itemWaiverFlag = true;
+    if (waivers && waivers.attachments) {
+      waivers.attachments.forEach((item) => {
+        const agreement = waiversAgreements[item.id];
+
+        if (agreement.required && !(agreement.value)) {
+          itemWaiverFlag = false;
+        }
+      });
+    }
+    // check final waiver
+    const finalWaiverFlag = checkFinalWaiver(final_initials_waiver)
+      && checkFinalWaiver(final_system_waiver);
+
+    canCheckout = itemWaiverFlag && finalWaiverFlag;
+  }
+
+  dispatch(uiValidationAction({ isPass: canCheckout }));
+  return canCheckout ? Promise.resolve() : Promise.reject();
+};
+
+export const validateAndCheckoutShoppingCartAction = () => (dispatch, getState) =>
+  dispatch(validateWaiversAction()(dispatch, getState)).then(
+    () => {
+      uiClearWaiverErrors();
       dispatch(checkoutShoppingCartAction());
-    } else {
-      showError(orderSummaryMessages.waiverError.defaultMessage);
+    },
+    () => {
+      uiShowWaiverErrors();
+      dispatch(uiValidateAgreementAction());
       window.scrollTo(0, 0);
     }
-  };
-}
+  );

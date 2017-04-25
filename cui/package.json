@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "node node_modules/gulp/bin/gulp.js dev",
     "lint": "eslint --ext .js,.jsx ./src",
+    "lint:fix": "eslint -fix --ext .js,.jsx ./src",
     "lint:checkstyle": "eslint --ext .js --ext .jsx ./src --quiet --format checkstyle > eslint-checkstyle.xml",
     "prod": "node node_modules/gulp/bin/gulp.js prod",
     "static": "node node_modules/gulp/bin/gulp.js static",
@@ -107,7 +108,7 @@
     "normalize.css": "^3.0.3",
     "radium": "0.18.1",
     "react": "15.4.2",
-    "react-aaui": "git+ssh://git@gitlab.dev.activenetwork.com:fee/react-aaui.git#v1.8.26",
+    "react-aaui": "git+ssh://git@gitlab.dev.activenetwork.com:fee/react-aaui.git#v1.10.3",
     "react-addons-pure-render-mixin": "^15.4.2",
     "react-base-ui": "git+ssh://git@gitlab.dev.activenetwork.com:ActiveNet/react-base-ui.git",
     "react-dom": "15.4.2",
@@ -116,7 +117,6 @@
     "react-redux": "5.0.2",
     "react-router": "3.0.2",
     "react-router-redux": "4.0.7",
-    "react-select": "1.0.0-beta14",
     "redux": "^3.3.1"
   }
 }

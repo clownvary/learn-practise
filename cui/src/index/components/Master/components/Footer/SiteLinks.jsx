@@ -1,8 +1,7 @@
 import React from 'react';
-import UIComponent from 'shared/components/UIComponent';
-import { encodeHtmlStr } from 'shared/utils/func';
+import { encodeHtmlStr } from 'react-base-ui/lib/utils';
 
-export default class SiteLinks extends UIComponent {
+export default class SiteLinks extends React.PureComponent {
 
   static contextTypes = {
     configurations: React.PropTypes.object

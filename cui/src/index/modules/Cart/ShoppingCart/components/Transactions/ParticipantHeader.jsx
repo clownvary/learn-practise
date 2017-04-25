@@ -1,5 +1,4 @@
 import React from 'react';
-import UIComponent from 'shared/components/UIComponent';
 import { injectIntl } from 'react-intl';
 import { FormattedMessage, FormattedNumber, FormattedDyncMessage } from 'shared/translation/formatted';
 import { PREFIX } from 'shared/translation/messages/wording';
@@ -7,7 +6,7 @@ import selfMessages from './translations';
 
 import './participant.less';
 
-export class ParticipantHeader extends UIComponent {
+export class ParticipantHeader extends React.PureComponent {
 
   render() {
     const { participant, index, intl: { messages } } = this.props;

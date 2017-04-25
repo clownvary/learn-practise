@@ -1,7 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import UIComponent from 'shared/components/UIComponent';
-import { cleanMessages } from 'react-base-ui/lib/messages';
 import Button from 'react-aaui/lib/Button';
 import CommonOrderSummary from 'index/modules/Cart/shared/CommonOrderSummary';
 import { FormattedMessage } from 'shared/translation/formatted';
@@ -10,7 +8,7 @@ import { getShoppingCartNeedPayAction, validateAndCheckoutShoppingCartAction } f
 
 import './index.less';
 
-export class OrderSummary extends UIComponent {
+export class OrderSummary extends React.PureComponent {
 
   componentDidMount() {
     this.props.getShoppingCartNeedPayAction();
@@ -29,7 +27,6 @@ export class OrderSummary extends UIComponent {
 
   handlerCheckoutClick() {
     const { waiver } = this.props.ShoppingCart;
-    cleanMessages();
     this.props.validateAndCheckoutShoppingCartAction(waiver);
   }
 

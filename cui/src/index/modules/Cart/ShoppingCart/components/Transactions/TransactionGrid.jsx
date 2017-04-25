@@ -1,5 +1,4 @@
 import React from 'react';
-import UIComponent from 'shared/components/UIComponent';
 import { injectIntl } from 'react-intl';
 import { FormattedMessage, FormattedNumber, FormattedDyncMessage } from 'shared/translation/formatted';
 import orderSummaryMessages from 'shared/translation/messages/Cart/orderSummary';
@@ -7,7 +6,7 @@ import selfMessages from './translations';
 
 import './transactiongrid.less';
 
-export class TransactionGrid extends UIComponent {
+export class TransactionGrid extends React.PureComponent {
 
   static contextTypes = {
     getWording: React.PropTypes.func

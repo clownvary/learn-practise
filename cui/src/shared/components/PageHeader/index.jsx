@@ -1,16 +1,12 @@
 import React from 'react';
 import classNames from 'classnames';
 import isString from 'lodash/isString';
-import UIComponent from 'shared/components/UIComponent';
-import { encodeHtmlStr } from 'shared/utils/func';
 import { FormattedMessage, FormattedHtmlMessage } from 'shared/translation/formatted';
-
-import Img from 'shared/components/Img';
 
 import './index.less';
 import 'shared/assets/images/img-active-logo.png';
 
-export default class PageHeader extends UIComponent {
+export default class PageHeader extends React.PureComponent {
 
   static contextTypes = {
     configurations: React.PropTypes.object
@@ -19,7 +15,7 @@ export default class PageHeader extends UIComponent {
   static defaultProps = {
     classes: 'page-header',
     showLogo: true,
-    imgPath: 'images/img-active-logo.png'
+    imgPath: '/images/img-active-logo.png'
   }
 
   render() {
@@ -51,7 +47,7 @@ export default class PageHeader extends UIComponent {
         {...rest}
         className={classNames(classes, className)}>
         {
-          showLogo && !configurations.get('hide_active_branding') ? <Img src={imgPath} /> : undefined
+          showLogo && !configurations.get('hide_active_branding') ? <img src={imgPath} /> : undefined
         }
         {children}
         {pageTitle}

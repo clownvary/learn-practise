@@ -1,20 +1,26 @@
 import React from 'react';
 import classNames from 'classnames';
-import UIComponent from 'shared/components/UIComponent';
 import Label from 'react-aaui/lib/Label';
 import { FormattedMessage, FormattedNumber, FormattedDyncMessage } from 'shared/translation/formatted';
-import { getTrasactionType } from 'shared/business/transaction';
 import TransactionGrid from './TransactionGrid';
 import selfMessages from './translations';
 
+import transactionTypes from '../../consts/transactionTypes';
+
 import './transactions.less';
 
-export default class Transaction extends UIComponent {
+export default class Transaction extends React.PureComponent {
 
   static contextTypes = {
     configurations: React.PropTypes.object,
     getWording: React.PropTypes.func
   }
+
+  static getTrasactionType = (configurations, id) => {
+    const typeKey = transactionTypes[id];
+    const type = configurations.get(typeKey) || typeKey;
+    return type;
+  };
 
   constructor(props) {
     super(props);
@@ -47,7 +53,7 @@ export default class Transaction extends UIComponent {
       deferred_amount: deferredAmount
     } = transaction;
 
-    const transType = getTrasactionType(configurations, transactionType);
+    const transType = this.constructor.getTrasactionType(configurations, transactionType);
 
     const expandable = primaryPriceGrid.length > 0;
 

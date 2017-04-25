@@ -1,12 +1,11 @@
 import React from 'react';
-import UIComponent from 'shared/components/UIComponent';
 
 import Transactions from './Transactions';
 import ParticipantHeader from './ParticipantHeader';
 
 import './participant.less';
 
-export default class Participant extends UIComponent {
+export default class Participant extends React.PureComponent {
 
   render() {
     const { participant, participant: { transactions }, index } = this.props;

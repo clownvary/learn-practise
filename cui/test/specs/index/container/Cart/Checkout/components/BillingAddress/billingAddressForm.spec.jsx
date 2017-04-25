@@ -38,7 +38,8 @@ const intl = {
 const defaultConfig = {
   useAddressVerification: true,
   canCreate: true,
-  hideBilling: false
+  hideBilling: false,
+  isInternational: true
 };
 
 payers.map((ba) => {
@@ -59,6 +60,7 @@ const initialState = {
   formErrors: {},
   isFormHeaderDisplay: true,
   isFormDisplay: true,
+  isStateShownAsList: true,
   formMode: formModes.VIEW
 };
 
@@ -225,25 +227,25 @@ describe('index/modules/Cart/Checkout/components/BillingAddress/BillingAddressFo
     inputs.forEach((input) => {
       let value = '';
       switch (input.props().id) {
-        case 'frmFirstName':
+        case `frm${fields.FIRST}`:
           value = formData[fields.FIRST];
           break;
-        case 'frmLastName':
+        case `frm${fields.LAST}`:
           value = formData[fields.LAST];
           break;
-        case 'frmMailingName':
+        case `frm${fields.MAILINGNAME}`:
           value = formData[fields.MAILINGNAME];
           break;
-        case 'frmStreetAddress1':
+        case `frm${fields.ADDRESS1}`:
           value = formData[fields.ADDRESS1];
           break;
-        case 'frmStreetAddress2':
+        case `frm${fields.ADDRESS2}`:
           value = formData[fields.ADDRESS2];
           break;
-        case 'frmCity':
+        case `frm${fields.CITY}`:
           value = formData[fields.CITY];
           break;
-        case 'frmZipCode':
+        case `frm${fields.ZIPCODE}`:
           value = formData[fields.ZIPCODE];
           break;
         default:
@@ -251,7 +253,7 @@ describe('index/modules/Cart/Checkout/components/BillingAddress/BillingAddressFo
           break;
       }
 
-      expect(input.props().value).toEqual(value);
+      expect(input.props().value || '').toEqual(value || '');
     });
   });
 
@@ -319,22 +321,6 @@ describe('index/modules/Cart/Checkout/components/BillingAddress/BillingAddressFo
         [fields.ZIPCODE]: ''
       }
     }).errors;
-    expect(errors.length).toEqual(3);
-
-    errors = setup({
-      isFormDisplay: true,
-      formMode: formModes.CREATE,
-      formErrors: {
-        [fields.FIRST]: 'required',
-        [fields.LAST]: 'required',
-        [fields.ADDRESS1]: 'required',
-        [fields.ADDRESS2]: 'required',
-        [fields.COUNTRY]: 'required',
-        [fields.CITY]: '',
-        [fields.STATE]: '',
-        [fields.ZIPCODE]: ''
-      }
-    }).errors;
     expect(errors.length).toEqual(4);
 
     errors = setup({
@@ -346,7 +332,7 @@ describe('index/modules/Cart/Checkout/components/BillingAddress/BillingAddressFo
         [fields.ADDRESS1]: 'required',
         [fields.ADDRESS2]: 'required',
         [fields.COUNTRY]: 'required',
-        [fields.CITY]: 'required',
+        [fields.CITY]: '',
         [fields.STATE]: '',
         [fields.ZIPCODE]: ''
       }
@@ -363,7 +349,7 @@ describe('index/modules/Cart/Checkout/components/BillingAddress/BillingAddressFo
         [fields.ADDRESS2]: 'required',
         [fields.COUNTRY]: 'required',
         [fields.CITY]: 'required',
-        [fields.STATE]: 'required',
+        [fields.STATE]: '',
         [fields.ZIPCODE]: ''
       }
     }).errors;
@@ -380,9 +366,25 @@ describe('index/modules/Cart/Checkout/components/BillingAddress/BillingAddressFo
         [fields.COUNTRY]: 'required',
         [fields.CITY]: 'required',
         [fields.STATE]: 'required',
-        [fields.ZIPCODE]: 'required'
+        [fields.ZIPCODE]: ''
       }
     }).errors;
     expect(errors.length).toEqual(7);
+
+    errors = setup({
+      isFormDisplay: true,
+      formMode: formModes.CREATE,
+      formErrors: {
+        [fields.FIRST]: 'required',
+        [fields.LAST]: 'required',
+        [fields.ADDRESS1]: 'required',
+        [fields.ADDRESS2]: 'required',
+        [fields.COUNTRY]: 'required',
+        [fields.CITY]: 'required',
+        [fields.STATE]: 'required',
+        [fields.ZIPCODE]: 'required'
+      }
+    }).errors;
+    expect(errors.length).toEqual(8);
   });
 });

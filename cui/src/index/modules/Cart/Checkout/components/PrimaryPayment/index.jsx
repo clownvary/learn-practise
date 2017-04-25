@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import UIComponent from 'shared/components/UIComponent';
 import { FormattedMessage } from 'shared/translation/formatted';
 import {
   registerModuleActoin,
@@ -16,7 +15,7 @@ import './index.less';
 
 const MODULENAME = 'primary';
 
-export class PrimaryPayment extends UIComponent {
+export class PrimaryPayment extends React.PureComponent {
 
   componentWillMount() {
     this.props.registerModuleActoin(

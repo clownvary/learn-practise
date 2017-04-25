@@ -4,7 +4,7 @@ const webpack = require('webpack');
 const includeDirs = [
   path.resolve('src'),
   path.resolve('test'),
-  path.resolve('translations'),
+  path.resolve('i18n'),
   path.resolve('node_modules/active.css'),
   path.resolve('node_modules/react-aaui'),
   path.resolve('node_modules/react-base-ui'),
@@ -50,7 +50,7 @@ module.exports = function karmaConfig(config) {
       },
       resolve: {
         extensions: ['', '.js', '.jsx', '.less', '.json'],
-        modulesDirectories: ['src', 'translations', 'test/json', 'test/specs', 'node_modules']
+        modulesDirectories: ['src', 'i18n', 'test/json', 'test/specs', 'node_modules']
       },
       resolveLoader: {
         modulesDirectories: ['tasks/loaders', 'node_modules']

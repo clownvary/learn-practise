@@ -2,13 +2,12 @@ import React from 'react';
 import Dropdown from 'react-aaui/lib/Dropdown';
 import { injectIntl } from 'react-intl';
 
-import UIComponent from 'shared/components/UIComponent';
 import { FormattedDyncMessage, FormattedMessage } from 'shared/translation/formatted';
 
 import selfMessages from './translations';
 import './index.less';
 
-export class BillingAddressList extends UIComponent {
+export class BillingAddressList extends React.PureComponent {
   static propTypes = {
     data: React.PropTypes.shape({
       toJS: React.PropTypes.func
@@ -98,7 +97,7 @@ export class BillingAddressList extends UIComponent {
             </div>
             : null
         }
-      </div >
+      </div>
     );
   }
 }
