@@ -14,7 +14,7 @@ describe('hello world', () => {
     expect(10).to.be.least(10);
   });
 });
-describe.only('hooks', () => {
+describe('hooks', () => {
   var foo = false;
 
   beforeEach(function () {
