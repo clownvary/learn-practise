@@ -2,8 +2,9 @@ language: node_js
 node_js:
   - "node"
   - "7.9.0"
-install:
+before_install:
   - cd activecss
+install:
   - npm install
 script:
     - npm run test
