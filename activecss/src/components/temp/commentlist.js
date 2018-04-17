@@ -7,10 +7,6 @@ const propTypes = {
 };
 
 class CommentList extends Component {
-  componentDidMount() {
-    this.props.onMount();
-  }
-
   render() {
     return (
       <ul>

@@ -1,8 +1,15 @@
 var argv = require('yargs').argv;
 var path = require('path');
 
-module.exports = function(config) {
+module.exports = function (config) {
   config.set({
+    port: 7998,
+    basePath: '',
+    client: {
+      mocha: {
+        timeout: 9000
+      }
+    },
     browsers: ['PhantomJS'],
     singleRun: !argv.watch, // just run once by default
     frameworks: ['mocha', 'chai'],
@@ -22,8 +29,8 @@ module.exports = function(config) {
       ['./test/**/*.js']: ['webpack', 'sourcemap']
     },
     webpack: {
-       devtool: 'inline-source-map',
-       resolve: {
+      devtool: 'inline-source-map',
+      resolve: {
         // allow us to import components in tests like:
         // import Example from 'components/Example';
         root: path.resolve(__dirname, './src'),
