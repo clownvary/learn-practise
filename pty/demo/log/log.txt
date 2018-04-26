@@ -1,0 +1,9 @@
+2018-04-18 11:13:45,536 : DEBUG : this is debug
+2018-04-18 11:13:45,536 : INFO : Doing something
+2018-04-18 11:13:45,536 : WARNING : Dying now
+2018-04-18 11:14:33,834 : DEBUG : this is debug
+2018-04-18 11:14:33,834 : INFO : Doing something
+2018-04-18 11:14:33,834 : WARNING : Dying now
+2018-04-18 13:14:22,103 : DEBUG : this is debug
+2018-04-18 13:14:22,103 : INFO : Doing something
+2018-04-18 13:14:22,103 : WARNING : Dying now
