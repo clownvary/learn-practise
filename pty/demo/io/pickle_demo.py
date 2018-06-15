@@ -1,7 +1,5 @@
 # encoding=utf-8
 import pickle
-import os
-import time
 
 
 class Person(object):
@@ -31,6 +29,6 @@ def unSerialize():
     print('unSerialize successful')
 
 # serialize()
-# unSerialize()
+unSerialize()
 
 # print('x')
